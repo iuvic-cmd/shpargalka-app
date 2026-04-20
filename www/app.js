@@ -71,3 +71,39 @@ custom_url_scheme → "com.myname.app"`
 Потом unzip архив → установка`
     }
 ];
+
+const container = document.getElementById('cardsContainer');
+const searchInput = document.getElementById('searchInput');
+
+function renderCards(filterText = '') {
+    const filter = filterText.toLowerCase().trim();
+    
+    const filtered = cheats.filter(item => {
+        if (filter === '') return true;
+        return item.title.toLowerCase().includes(filter) || 
+               item.tags.toLowerCase().includes(filter) ||
+               item.content.toLowerCase().includes(filter);
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<div class="card" style="text-align: center; color: #95a5a6;">🔎 Ничего не найдено</div>`;
+        return;
+    }
+
+    let html = '';
+    filtered.forEach(item => {
+        html += `
+            <div class="card">
+                <div class="card-title">${item.title}</div>
+                <div class="card-content">${item.content.replace(/\\n/g, '<br>')}</div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+searchInput.addEventListener('input', (e) => {
+    renderCards(e.target.value);
+});
+
+renderCards();
