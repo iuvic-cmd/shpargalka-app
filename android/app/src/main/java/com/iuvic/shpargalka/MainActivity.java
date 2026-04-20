@@ -1,3 +1,3 @@
-package com.worktime.app;
+package com.iuvic.shpargalka;
 import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {}
