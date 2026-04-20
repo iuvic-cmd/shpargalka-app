@@ -107,3 +107,4 @@ searchInput.addEventListener('input', (e) => {
 });
 
 renderCards();
+
