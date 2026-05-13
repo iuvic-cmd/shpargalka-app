@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Шпаргалка</string>
+    <string name="app_name">Бюджет & Расходы</string>
     <string name="title_activity_main">Шпаргалка</string>
     <string name="package_name">com.iuvic.shpargalka</string>
     <string name="custom_url_scheme">com.iuvic.shpargalka</string>
