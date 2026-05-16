@@ -655,17 +655,7 @@ const CHART_COLORS = ['#60a5fa','#f87171','#4ade80','#facc15','#c084fc','#fb923c
 
 function load() {
   const raw = localStorage.getItem('budget_db_v2');
-  if (raw) {
-    const parsed = JSON.parse(raw);
-    // Миграция: добавляем поле isCC для существующих транзакций если его нет
-    if (parsed.transactions) {
-      parsed.transactions.forEach(tx => {
-        if (tx.isCC === undefined) tx.isCC = false;
-        if (tx.toIsCC === undefined) tx.toIsCC = false;
-      });
-    }
-    DB = parsed;
-  }
+  if (raw) DB = JSON.parse(raw);
 }
 function saveDisk() {
   localStorage.setItem('budget_db_v2', JSON.stringify(DB));
@@ -730,12 +720,7 @@ function saveAccount() {
   saveDisk(); closeModal('modalAcc'); notify('Счёт добавлен ✓');
 }
 function deleteAccount(id) {
-  if (!confirm('Удалить счёт? Это также удалит все связанные транзакции.')) return;
-  // Удаляем все транзакции связанные с этим счетом
-  DB.transactions = DB.transactions.filter(tx => {
-    if (tx.isCC) return true; // кредитные карты не трогаем
-    return tx.accId !== id && tx.toAccId !== id;
-  });
+  if (!confirm('Удалить счёт?')) return;
   DB.accounts = DB.accounts.filter(a => a.id !== id);
   saveDisk(); notify('Удалено');
 }
@@ -757,13 +742,7 @@ function saveCC() {
   saveDisk(); closeModal('modalCC'); notify('Карта добавлена ✓');
 }
 function deleteCC(id) {
-  if (!confirm('Удалить карту? Это также удалит все связанные транзакции.')) return;
-  // Удаляем все транзакции связанные с этой кредитной картой
-  DB.transactions = DB.transactions.filter(tx => {
-    if (tx.isCC && tx.accId === id) return false;
-    if (tx.toIsCC && tx.toAccId === id) return false;
-    return true;
-  });
+  if (!confirm('Удалить карту?')) return;
   DB.creditCards = DB.creditCards.filter(x => x.id !== id);
   saveDisk();
 }
@@ -789,203 +768,49 @@ function setTxType(type, el) {
 function updateTxSelects() {
   const cats = newTxType === 'expense' ? DB.expCats : DB.incCats;
   document.getElementById('txCat').innerHTML = cats.map(c => `<option value="${c.id}">${c.emoji} ${c.name}</option>`).join('');
-  
-  // Объединяем обычные счета и кредитные карты в один список
-  const regularAccounts = DB.accounts.map(a => `<option value="acc_${a.id}">${a.emoji} ${a.name} (${fmt(a.balance)})</option>`).join('');
-  const creditCardOptions = DB.creditCards.map(cc => {
-    const avail = cc.limit - cc.used;
-    return `<option value="cc_${cc.id}">💳 ${cc.bank} (доступно: ${fmt(avail)})</option>`;
-  }).join('');
-  
-  const allOptions = regularAccounts + creditCardOptions;
-  const defaultOption = (DB.accounts.length === 0 && DB.creditCards.length === 0) 
-    ? '<option value="">— нет счетов —</option>' 
-    : '';
-  
-  document.getElementById('txAcc').innerHTML = defaultOption + allOptions;
-  document.getElementById('txToAcc').innerHTML = defaultOption + allOptions;
+  const accOptions = DB.accounts.length
+    ? DB.accounts.map(a => `<option value="${a.id}">${a.emoji} ${a.name}</option>`).join('')
+    : '<option value="">— нет счетов —</option>';
+  document.getElementById('txAcc').innerHTML = accOptions;
+  document.getElementById('txToAcc').innerHTML = accOptions;
 }
-
-function getAccountInfo(accIdStr) {
-  // accIdStr format: "acc_xxx" or "cc_xxx"
-  if (!accIdStr) return null;
-  if (accIdStr.startsWith('acc_')) {
-    const id = accIdStr.substring(4);
-    const acc = DB.accounts.find(a => a.id === id);
-    return acc ? { ...acc, isCC: false } : null;
-  } else if (accIdStr.startsWith('cc_')) {
-    const id = accIdStr.substring(3);
-    const cc = DB.creditCards.find(c => c.id === id);
-    return cc ? { id: cc.id, name: cc.bank, emoji: '💳', isCC: true, balance: cc.limit - cc.used, limit: cc.limit, used: cc.used } : null;
-  }
-  return null;
-}
-
 function saveTx() {
   const amt = parseFloat(document.getElementById('txAmt').value);
   if (!amt || amt <= 0) return notify('Укажите сумму');
-  
-  const accIdStr = document.getElementById('txAcc').value;
-  if (!accIdStr) return notify('Выберите счёт');
-  
-  const accInfo = getAccountInfo(accIdStr);
-  if (!accInfo) return notify('Счёт не найден');
+  const accId = document.getElementById('txAcc').value;
+  if (!accId) return notify('Выберите счёт');
 
   if (newTxType === 'transfer') {
-    const toAccIdStr = document.getElementById('txToAcc').value;
-    if (!toAccIdStr) return notify('Выберите счёт получатель');
-    if (accIdStr === toAccIdStr) return notify('Выберите другой счёт получатель');
-    
-    const toAccInfo = getAccountInfo(toAccIdStr);
-    if (!toAccInfo) return notify('Счёт получатель не найден');
-    
-    // Проверяем достаточно ли средств для перевода
-    if (accInfo.isCC) {
-      const avail = accInfo.limit - accInfo.used;
-      if (avail < amt) return notify('Недостаточно доступного лимита на кредитной карте');
-    } else {
-      if (accInfo.balance < amt) return notify('Недостаточно средств на счёте');
-    }
-    
-    // Выполняем перевод
-    if (accInfo.isCC) {
-      // С кредитной карты
-      const cc = DB.creditCards.find(c => c.id === accInfo.id);
-      cc.used += amt;
-    } else {
-      // С обычного счета
-      const acc = DB.accounts.find(a => a.id === accInfo.id);
-      acc.balance -= amt;
-    }
-    
-    if (toAccInfo.isCC) {
-      // На кредитную карту (погашение)
-      const cc = DB.creditCards.find(c => c.id === toAccInfo.id);
-      cc.used -= amt;
-      if (cc.used < 0) cc.used = 0;
-    } else {
-      // На обычный счет
-      const acc = DB.accounts.find(a => a.id === toAccInfo.id);
-      acc.balance += amt;
-    }
-    
-    DB.transactions.unshift({
-      id: uid(),
-      type: 'transfer',
-      amt,
-      desc: document.getElementById('txDesc').value.trim() || 'Перевод',
-      catId: 'transfer',
-      accId: accInfo.id,
-      toAccId: toAccInfo.id,
-      isCC: accInfo.isCC,
-      toIsCC: toAccInfo.isCC,
-      date: document.getElementById('txDate').value
-    });
-    
-  } else if (newTxType === 'income') {
-    // Доход
-    if (accInfo.isCC) {
-      // Доход на кредитную карту - уменьшаем использованный лимит
-      const cc = DB.creditCards.find(c => c.id === accInfo.id);
-      cc.used -= amt;
-      if (cc.used < 0) cc.used = 0;
-    } else {
-      // Доход на обычный счет
-      const acc = DB.accounts.find(a => a.id === accInfo.id);
-      acc.balance += amt;
-    }
-    
-    DB.transactions.unshift({
-      id: uid(),
-      type: 'income',
-      amt,
-      desc: document.getElementById('txDesc').value.trim() || '—',
-      catId: document.getElementById('txCat').value,
-      accId: accInfo.id,
-      toAccId: null,
-      isCC: accInfo.isCC,
-      toIsCC: false,
-      date: document.getElementById('txDate').value
-    });
-    
+    const toAccId = document.getElementById('txToAcc').value;
+    if (!toAccId || accId === toAccId) return notify('Выберите другой счёт получатель');
+    const fromAcc = DB.accounts.find(a => a.id === accId);
+    const toAcc = DB.accounts.find(a => a.id === toAccId);
+    if (fromAcc.balance < amt) return notify('Недостаточно средств');
+    fromAcc.balance -= amt; toAcc.balance += amt;
+    DB.transactions.unshift({ id:uid(), type:'transfer', amt, desc:document.getElementById('txDesc').value.trim()||'Перевод', catId:'transfer', accId, toAccId, date:document.getElementById('txDate').value });
   } else {
-    // Расход
-    if (accInfo.isCC) {
-      // Расход с кредитной карты
-      const cc = DB.creditCards.find(c => c.id === accInfo.id);
-      const avail = cc.limit - cc.used;
-      if (avail < amt) return notify('Недостаточно доступного лимита на кредитной карте');
-      cc.used += amt;
-    } else {
-      // Расход с обычного счета
-      const acc = DB.accounts.find(a => a.id === accInfo.id);
-      if (acc.balance < amt) return notify('Недостаточно средств на счёте');
-      acc.balance -= amt;
-    }
-    
-    DB.transactions.unshift({
-      id: uid(),
-      type: 'expense',
-      amt,
-      desc: document.getElementById('txDesc').value.trim() || '—',
-      catId: document.getElementById('txCat').value,
-      accId: accInfo.id,
-      toAccId: null,
-      isCC: accInfo.isCC,
-      toIsCC: false,
-      date: document.getElementById('txDate').value
-    });
+    const acc = DB.accounts.find(a => a.id === accId);
+    if (!acc) return;
+    if (newTxType === 'income') acc.balance += amt;
+    else { if (acc.balance < amt) return notify('Недостаточно средств'); acc.balance -= amt; }
+    DB.transactions.unshift({ id:uid(), type:newTxType, amt, desc:document.getElementById('txDesc').value.trim()||'—', catId:document.getElementById('txCat').value, accId, toAccId:null, date:document.getElementById('txDate').value });
   }
-  
-  saveDisk();
-  closeModal('modalTx');
-  notify('Операция добавлена ✓');
+  saveDisk(); closeModal('modalTx'); notify('Операция добавлена ✓');
 }
-
 function deleteTx(id) {
   const tx = DB.transactions.find(t => t.id === id);
   if (!tx) return;
-  
-  // Откатываем изменения баланса
   if (tx.type === 'transfer') {
-    // Откат перевода
-    if (tx.isCC) {
-      const cc = DB.creditCards.find(c => c.id === tx.accId);
-      if (cc) cc.used -= tx.amt;
-    } else {
-      const acc = DB.accounts.find(a => a.id === tx.accId);
-      if (acc) acc.balance += tx.amt;
-    }
-    
-    if (tx.toIsCC) {
-      const cc = DB.creditCards.find(c => c.id === tx.toAccId);
-      if (cc) cc.used += tx.amt;
-    } else {
-      const acc = DB.accounts.find(a => a.id === tx.toAccId);
-      if (acc) acc.balance -= tx.amt;
-    }
-  } else if (tx.type === 'income') {
-    if (tx.isCC) {
-      const cc = DB.creditCards.find(c => c.id === tx.accId);
-      if (cc) cc.used += tx.amt;
-    } else {
-      const acc = DB.accounts.find(a => a.id === tx.accId);
-      if (acc) acc.balance -= tx.amt;
-    }
+    const from = DB.accounts.find(a => a.id === tx.accId);
+    const to = DB.accounts.find(a => a.id === tx.toAccId);
+    if (from) from.balance += tx.amt;
+    if (to) to.balance -= tx.amt;
   } else {
-    // expense
-    if (tx.isCC) {
-      const cc = DB.creditCards.find(c => c.id === tx.accId);
-      if (cc) cc.used -= tx.amt;
-    } else {
-      const acc = DB.accounts.find(a => a.id === tx.accId);
-      if (acc) acc.balance += tx.amt;
-    }
+    const acc = DB.accounts.find(a => a.id === tx.accId);
+    if (acc) { if (tx.type==='income') acc.balance -= tx.amt; else acc.balance += tx.amt; }
   }
-  
   DB.transactions = DB.transactions.filter(t => t.id !== id);
-  saveDisk();
-  notify('Удалено');
+  saveDisk(); notify('Удалено');
 }
 
 // ─── CATEGORIES ──────────────────────────
@@ -1029,23 +854,7 @@ function importTrigger() { document.getElementById('importFile').click(); }
 function importData(e) {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = ev => { 
-    try { 
-      const parsed = JSON.parse(ev.target.result);
-      // Миграция данных при импорте
-      if (parsed.transactions) {
-        parsed.transactions.forEach(tx => {
-          if (tx.isCC === undefined) tx.isCC = false;
-          if (tx.toIsCC === undefined) tx.toIsCC = false;
-        });
-      }
-      DB = parsed; 
-      saveDisk(); 
-      notify('Данные загружены ✓'); 
-    } catch { 
-      notify('Ошибка файла'); 
-    } 
-  };
+  reader.onload = ev => { try { DB = JSON.parse(ev.target.result); saveDisk(); notify('Данные загружены ✓'); } catch { notify('Ошибка файла'); } };
   reader.readAsText(file);
 }
 
@@ -1068,12 +877,7 @@ function renderSummary() {
   const monthTxs = DB.transactions.filter(inCurrentMonth);
   const income = monthTxs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amt,0);
   const expense = monthTxs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amt,0);
-  
-  // Учитываем кредитные карты в общем балансе
   const totalBal = DB.accounts.reduce((s,a)=>s+a.balance,0);
-  const ccDebt = DB.creditCards.reduce((s,cc)=>s+cc.used,0);
-  const netWorth = totalBal - ccDebt;
-  
   const balance = income - expense;
   const balColor = balance >= 0 ? 'var(--accent)' : 'var(--accent2)';
   const savingsRate = income > 0 ? Math.round((balance/income)*100) : 0;
@@ -1095,9 +899,9 @@ function renderSummary() {
       <div class="sum-sub">Норма сбережений: ${savingsRate}%</div>
     </div>
     <div class="sum-card p">
-      <div class="sum-label">Чистый капитал</div>
-      <div class="sum-val" style="color:${netWorth>=0?'var(--accent5)':'var(--accent2)'}">${fmt(netWorth)}</div>
-      <div class="sum-sub">${DB.accounts.length} счетов · долг по КК: ${fmt(ccDebt)}</div>
+      <div class="sum-label">Баланс всех счетов</div>
+      <div class="sum-val" style="color:var(--accent5)">${fmt(totalBal)}</div>
+      <div class="sum-sub">${DB.accounts.length} счетов</div>
     </div>
   `;
 }
@@ -1127,38 +931,17 @@ function renderOverviewList() {
 function txRow(t) {
   const allCats = [...DB.expCats, ...DB.incCats];
   let cat = allCats.find(c => c.id === t.catId) || {emoji:'📌', name:'—'};
-  
-  // Получаем информацию о счете
-  let accInfo = null;
-  let toAccInfo = null;
-  
-  if (t.isCC) {
-    const cc = DB.creditCards.find(c => c.id === t.accId);
-    if (cc) accInfo = { emoji: '💳', name: cc.bank, isCC: true };
-  } else {
-    const acc = DB.accounts.find(a => a.id === t.accId);
-    if (acc) accInfo = { emoji: acc.emoji, name: acc.name, isCC: false };
-  }
-  
-  if (t.toIsCC) {
-    const cc = DB.creditCards.find(c => c.id === t.toAccId);
-    if (cc) toAccInfo = { emoji: '💳', name: cc.bank, isCC: true };
-  } else if (t.toAccId) {
-    const acc = DB.accounts.find(a => a.id === t.toAccId);
-    if (acc) toAccInfo = { emoji: acc.emoji, name: acc.name, isCC: false };
-  }
+  const acc = DB.accounts.find(a => a.id === t.accId);
+  const toAcc = DB.accounts.find(a => a.id === t.toAccId);
 
   let typeClass = t.type, amountPrefix = '', catBg = '';
   if (t.type==='transfer') { amountPrefix='⟷'; catBg='rgba(192,132,252,.12)'; cat={emoji:'⟷',name:'Перевод'}; }
   else if (t.type==='income') { amountPrefix='+'; catBg='rgba(74,222,128,.12)'; }
   else { amountPrefix='−'; catBg='rgba(248,113,113,.12)'; }
 
-  let accStr = '';
-  if (t.type==='transfer' && accInfo && toAccInfo) {
-    accStr = `${accInfo.emoji} ${accInfo.name} → ${toAccInfo.emoji} ${toAccInfo.name}`;
-  } else if (accInfo) {
-    accStr = `${accInfo.emoji} ${accInfo.name}`;
-  }
+  let accInfo = '';
+  if (t.type==='transfer' && acc && toAcc) accInfo = `${acc.emoji} ${acc.name} → ${toAcc.emoji} ${toAcc.name}`;
+  else if (acc) accInfo = `${acc.emoji} ${acc.name}`;
 
   return `<div class="tx-item">
     <div class="tx-cat-icon" style="background:${catBg}">${cat.emoji}</div>
@@ -1168,7 +951,7 @@ function txRow(t) {
     </div>
     <div class="tx-right">
       <div class="tx-amount ${typeClass}">${amountPrefix}${fmt(t.amt)}</div>
-      ${accStr ? `<div class="tx-acc">${accStr}</div>` : ''}
+      ${accInfo ? `<div class="tx-acc">${accInfo}</div>` : ''}
     </div>
     <button class="tx-del" onclick="deleteTx('${t.id}')">✕</button>
   </div>`;
