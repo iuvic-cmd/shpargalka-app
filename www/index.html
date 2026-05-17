@@ -768,12 +768,32 @@ function setTxType(type, el) {
 function updateTxSelects() {
   const cats = newTxType === 'expense' ? DB.expCats : DB.incCats;
   document.getElementById('txCat').innerHTML = cats.map(c => `<option value="${c.id}">${c.emoji} ${c.name}</option>`).join('');
-  const accOptions = DB.accounts.length
-    ? DB.accounts.map(a => `<option value="${a.id}">${a.emoji} ${a.name}</option>`).join('')
-    : '<option value="">— нет счетов —</option>';
-  document.getElementById('txAcc').innerHTML = accOptions;
-  document.getElementById('txToAcc').innerHTML = accOptions;
+  const accOpts = DB.accounts.map(a => `<option value="${a.id}">${a.emoji} ${a.name}</option>`).join('');
+  const ccOpts  = DB.creditCards.map(cc => `<option value="cc_${cc.id}">💳 ${cc.bank} (кредитная)</option>`).join('');
+  const allOpts = (accOpts + ccOpts) || '<option value="">— нет счетов —</option>';
+  document.getElementById('txAcc').innerHTML = allOpts;
+  document.getElementById('txToAcc').innerHTML = allOpts;
 }
+// Resolve account OR credit card by the select value (cc_ prefix = credit card)
+function resolveAcc(id) {
+  if (!id) return null;
+  if (id.startsWith('cc_')) {
+    const cc = DB.creditCards.find(c => c.id === id.slice(3));
+    return cc ? { _isCC: true, _ref: cc } : null;
+  }
+  const a = DB.accounts.find(a => a.id === id);
+  return a ? { _isCC: false, _ref: a } : null;
+}
+function accBalance(acc) {
+  return acc._isCC ? (acc._ref.limit - acc._ref.used) : acc._ref.balance;
+}
+function accDebit(acc, amt) {  // деньги уходят со счёта / долг растёт
+  if (acc._isCC) acc._ref.used += amt; else acc._ref.balance -= amt;
+}
+function accCredit(acc, amt) { // деньги приходят / долг уменьшается
+  if (acc._isCC) acc._ref.used -= amt; else acc._ref.balance += amt;
+}
+
 function saveTx() {
   const amt = parseFloat(document.getElementById('txAmt').value);
   if (!amt || amt <= 0) return notify('Укажите сумму');
@@ -783,16 +803,20 @@ function saveTx() {
   if (newTxType === 'transfer') {
     const toAccId = document.getElementById('txToAcc').value;
     if (!toAccId || accId === toAccId) return notify('Выберите другой счёт получатель');
-    const fromAcc = DB.accounts.find(a => a.id === accId);
-    const toAcc = DB.accounts.find(a => a.id === toAccId);
-    if (fromAcc.balance < amt) return notify('Недостаточно средств');
-    fromAcc.balance -= amt; toAcc.balance += amt;
+    const fromAcc = resolveAcc(accId);
+    const toAcc   = resolveAcc(toAccId);
+    if (!fromAcc || !toAcc) return notify('Счёт не найден');
+    if (!fromAcc._isCC && accBalance(fromAcc) < amt) return notify('Недостаточно средств');
+    accDebit(fromAcc, amt); accCredit(toAcc, amt);
     DB.transactions.unshift({ id:uid(), type:'transfer', amt, desc:document.getElementById('txDesc').value.trim()||'Перевод', catId:'transfer', accId, toAccId, date:document.getElementById('txDate').value });
   } else {
-    const acc = DB.accounts.find(a => a.id === accId);
-    if (!acc) return;
-    if (newTxType === 'income') acc.balance += amt;
-    else { if (acc.balance < amt) return notify('Недостаточно средств'); acc.balance -= amt; }
+    const acc = resolveAcc(accId);
+    if (!acc) return notify('Счёт не найден');
+    if (newTxType === 'income') accCredit(acc, amt);
+    else {
+      if (!acc._isCC && accBalance(acc) < amt) return notify('Недостаточно средств');
+      accDebit(acc, amt);
+    }
     DB.transactions.unshift({ id:uid(), type:newTxType, amt, desc:document.getElementById('txDesc').value.trim()||'—', catId:document.getElementById('txCat').value, accId, toAccId:null, date:document.getElementById('txDate').value });
   }
   saveDisk(); closeModal('modalTx'); notify('Операция добавлена ✓');
@@ -801,13 +825,13 @@ function deleteTx(id) {
   const tx = DB.transactions.find(t => t.id === id);
   if (!tx) return;
   if (tx.type === 'transfer') {
-    const from = DB.accounts.find(a => a.id === tx.accId);
-    const to = DB.accounts.find(a => a.id === tx.toAccId);
-    if (from) from.balance += tx.amt;
-    if (to) to.balance -= tx.amt;
+    const from = resolveAcc(tx.accId);
+    const to   = resolveAcc(tx.toAccId);
+    if (from) accCredit(from, tx.amt);
+    if (to)   accDebit(to,   tx.amt);
   } else {
-    const acc = DB.accounts.find(a => a.id === tx.accId);
-    if (acc) { if (tx.type==='income') acc.balance -= tx.amt; else acc.balance += tx.amt; }
+    const acc = resolveAcc(tx.accId);
+    if (acc) { if (tx.type==='income') accDebit(acc, tx.amt); else accCredit(acc, tx.amt); }
   }
   DB.transactions = DB.transactions.filter(t => t.id !== id);
   saveDisk(); notify('Удалено');
