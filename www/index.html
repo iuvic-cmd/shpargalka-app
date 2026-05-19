@@ -51,11 +51,18 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 .acc-context-item.warn{color:var(--gold)}
 
 /* Hero */
-.hero{margin:0 18px 14px;border-radius:18px;background:linear-gradient(145deg,#14201a,#0d180d);border:1px solid var(--border2);padding:20px}
+.hero{margin:0 18px 10px;border-radius:18px;background:linear-gradient(145deg,#14201a,#0d180d);border:1px solid var(--border2);padding:20px}
 .hero-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .hero-amt{font-size:38px;font-weight:700;letter-spacing:-1px;line-height:1}
 .hero-amt.ok{color:var(--accent)}.hero-amt.warn{color:var(--gold)}.hero-amt.bad{color:var(--red)}
 .hero-sub{font-size:11px;color:var(--muted);margin:4px 0 10px}
+
+/* Capital Card */
+.capital-card{margin:0 18px 14px;background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border)}
+.cap-item{background:var(--card);padding:13px 10px;text-align:center}
+.cap-lbl{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.cap-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cap-val.green{color:var(--accent2)}.cap-val.red{color:var(--red)}.cap-val.blue{color:var(--blue)}
 
 /* Quick actions */
 .quick-actions{display:flex;gap:8px;padding:0 18px 14px}
@@ -71,17 +78,23 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 
 /* Transactions */
 .tx-wrap{padding:0 18px;display:flex;flex-direction:column;gap:4px}
-.tx-item{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px;display:flex;align-items:center;gap:10px}
-.tx-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tx-item{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:10px;display:flex;align-items:center;gap:8px}
+.tx-ico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .tx-inf{flex:1;min-width:0}
-.tx-desc{font-size:13px;font-weight:600}
+.tx-desc{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tx-meta{font-size:10px;color:var(--muted)}
-.tx-right{text-align:right}
-.tx-amt{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600}
+.tx-right{text-align:right;flex-shrink:0}
+.tx-amt{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600}
 .tx-amt.e{color:var(--red)}.tx-amt.i{color:var(--accent2)}
 .tx-cat{font-size:9px;color:var(--muted);background:var(--card2);padding:2px 7px;border-radius:6px;margin-top:2px;display:inline-block}
 .tx-dg{margin-bottom:6px}
 .tx-dl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:6px 4px 4px}
+/* TX action buttons */
+.tx-actions{display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+.tx-act-btn{width:26px;height:26px;border-radius:7px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .15s;font-weight:700}
+.tx-act-btn.edit-btn{background:rgba(96,165,250,.1);color:var(--blue)}
+.tx-act-btn.del-btn{background:rgba(248,113,113,.1);color:var(--red)}
+.tx-act-btn:active{opacity:.7;transform:scale(.88)}
 .empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
 .empty-ico{font-size:40px;margin-bottom:10px;opacity:.4}
 .empty-txt{font-size:12px}
@@ -89,14 +102,16 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 /* Goals */
 .goals-scroll{display:flex;gap:10px;padding:0 18px 14px;overflow-x:auto;scrollbar-width:none}
 .goals-scroll::-webkit-scrollbar{display:none}
-.goal-card{flex-shrink:0;width:160px;background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:14px;cursor:pointer;transition:all .2s}
+.goal-card{flex-shrink:0;width:160px;background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:14px;cursor:pointer;transition:all .2s;position:relative}
 .goal-card:active{transform:scale(.96)}
 .goal-card-ico{font-size:24px;margin-bottom:6px}
-.goal-card-name{font-size:12px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.goal-card-name{font-size:12px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:20px}
 .goal-card-pct{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--accent);margin-bottom:6px}
 .goal-card-bar{height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
 .goal-card-fill{height:100%;border-radius:2px;transition:width .4s}
 .goal-card-sub{font-size:10px;color:var(--muted)}
+.goal-del-btn{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:6px;background:rgba(248,113,113,.15);border:1px solid rgba(248,113,113,.3);color:var(--red);font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700}
+.goal-del-btn:active{opacity:.7}
 .goal-add{flex-shrink:0;width:120px;border:1.5px dashed var(--border2);border-radius:14px;padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;color:var(--muted);font-size:10px;font-weight:700;min-height:110px}
 
 /* Debts */
@@ -106,19 +121,25 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 .dtab.on.owed{background:var(--accent2);color:#000}
 .dtab.on.credit{background:var(--blue);color:#fff}
 .debt-list{display:flex;flex-direction:column;gap:6px;margin:0 18px 14px}
-.debt-item{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:14px;cursor:pointer;transition:all .15s}
+.debt-item{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:14px;transition:all .15s}
 .debt-item:active{background:var(--card2)}
-.debt-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.debt-name{font-size:13px;font-weight:700}
-.debt-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px}
+.debt-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
+.debt-name{font-size:13px;font-weight:700;flex:1}
+.debt-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;flex-shrink:0}
 .debt-badge.owe{background:rgba(248,113,113,.15);color:var(--red)}
 .debt-badge.owed{background:rgba(74,222,128,.15);color:var(--accent2)}
 .debt-badge.credit{background:rgba(96,165,250,.15);color:var(--blue)}
-.debt-amounts{display:flex;justify-content:space-between;margin-bottom:8px}
+.debt-amounts{display:flex;justify-content:space-between;margin-bottom:8px;align-items:baseline}
 .debt-total{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:600}
 .debt-paid{font-size:10px;color:var(--muted)}
 .debt-prog-bar{height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
 .debt-prog-fill{height:100%;border-radius:2px}
+.debt-actions{display:flex;gap:6px;margin-top:10px}
+.debt-act-btn{flex:1;padding:8px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s}
+.debt-act-btn.edit{background:rgba(96,165,250,.12);color:var(--blue);border:1px solid rgba(96,165,250,.25)}
+.debt-act-btn.pay{background:rgba(74,222,128,.12);color:var(--accent2);border:1px solid rgba(74,222,128,.25)}
+.debt-act-btn.del{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.25)}
+.debt-act-btn:active{opacity:.7}
 
 /* STATS PAGE */
 .stats-header{margin:0 18px 16px;background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:18px;text-align:center}
@@ -183,7 +204,7 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 .savings-info-lbl{font-size:9px;color:var(--muted);margin-top:2px}
 
 /* Averages */
-.avg-card{margin:0 18px 14px;background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border)}
+.avg-card{margin:0 18px 14px;background:var(--border);border:1px solid var(--border2);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px}
 .avg-item{background:var(--card);padding:14px 10px;text-align:center}
 .avg-item-lbl{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .avg-item-val{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700}
@@ -210,10 +231,12 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 /* MODALS */
 .moverlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .moverlay.open{opacity:1;pointer-events:all}
-.modal{width:100%;max-width:430px;background:var(--surface);border-radius:20px 20px 0 0;border-top:1px solid var(--border2);padding:20px 18px 44px;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1);max-height:88vh;overflow-y:auto}
+.modal{width:100%;max-width:430px;background:var(--surface);border-radius:20px 20px 0 0;border-top:1px solid var(--border2);padding:20px 18px 44px;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1);max-height:88vh;overflow-y:auto;position:relative}
 .moverlay.open .modal{transform:translateY(0)}
 .m-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 18px}
-.m-title{font-size:18px;font-weight:700;margin-bottom:16px}
+.modal-close-btn{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text2);cursor:pointer;z-index:10;transition:all .15s}
+.modal-close-btn:active{background:rgba(248,113,113,.2);color:var(--red);border-color:rgba(248,113,113,.3)}
+.m-title{font-size:18px;font-weight:700;margin-bottom:16px;padding-right:35px}
 .m-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block}
 .m-inp{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--rs);padding:11px 13px;color:var(--text);font-size:14px;outline:none;margin-bottom:10px;transition:border-color .2s}
 .m-inp:focus{border-color:var(--accent-dim)}
@@ -221,9 +244,11 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 .m-row{display:flex;gap:8px}
 .m-row .m-inp{flex:1}
 .m-btn{width:100%;padding:13px;border:none;border-radius:var(--rs);font-weight:700;font-size:13px;cursor:pointer;margin-top:6px;transition:all .2s}
+.m-btn:disabled{opacity:.5;cursor:not-allowed;pointer-events:none}
 .m-btn.primary{background:var(--accent);color:#000}
 .m-btn.danger{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3)}
 .m-btn.warn{background:rgba(251,191,36,.15);color:var(--gold);border:1px solid rgba(251,191,36,.3)}
+.m-btn.cancel{background:var(--card2);color:var(--text2);border:1px solid var(--border2)}
 .m-btn:active{opacity:.85}
 
 /* Cat picker */
@@ -249,6 +274,8 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 .sc-btn.primary{background:var(--accent);color:#000}
 .sc-btn.secondary{background:var(--card2);border:1px solid var(--border2);color:var(--text2)}
 .sc-btn.danger{background:rgba(248,113,113,.15);color:var(--red)}
+.sc-btn-row{display:flex;gap:8px;margin-top:4px}
+.sc-btn-row .sc-btn{flex:1;margin-top:0}
 .cat-manage-item{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;margin-bottom:6px}
 .cmi-icon{font-size:18px;flex-shrink:0}
 .cmi-name{flex:1;font-size:13px;font-weight:600}
@@ -259,7 +286,7 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .confirm-overlay{position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .confirm-overlay.open{opacity:1;pointer-events:all}
-.confirm-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:24px;text-align:center;max-width:320px}
+.confirm-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:24px;text-align:center;max-width:320px;width:90%}
 .confirm-title{font-size:18px;font-weight:700;margin-bottom:8px}
 .confirm-text{font-size:13px;color:var(--muted);margin-bottom:20px}
 .confirm-btns{display:flex;gap:8px}
@@ -284,6 +311,13 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 <div class="hero-lbl">💰 Общий баланс</div>
 <div class="hero-amt ok" id="hero-amt">0 L</div>
 <div class="hero-sub" id="hero-sub">—</div>
+</div>
+
+<!-- Capital Card -->
+<div class="capital-card" id="capital-card">
+<div class="cap-item"><div class="cap-lbl">Активы</div><div class="cap-val green" id="cap-assets">0 L</div></div>
+<div class="cap-item"><div class="cap-lbl">Обязательства</div><div class="cap-val red" id="cap-liab">0 L</div></div>
+<div class="cap-item"><div class="cap-lbl">Капитал</div><div class="cap-val blue" id="cap-net">0 L</div></div>
 </div>
 
 <div class="quick-actions">
@@ -333,6 +367,18 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 <!-- SETTINGS PAGE -->
 <div id="p-settings" class="page">
 <div class="sh"><div class="sh-title">⚙️ Настройки</div></div>
+
+<!-- Import / Export -->
+<div class="settings-card">
+<div class="sc-title">💾 Данные</div>
+<p style="font-size:12px;color:var(--muted);margin-bottom:10px">Экспортируйте или восстановите все данные в формате JSON</p>
+<div class="sc-btn-row">
+<button class="sc-btn primary" onclick="exportJSON()">📤 Экспорт</button>
+<button class="sc-btn secondary" onclick="document.getElementById('import-file-input').click()">📥 Импорт</button>
+</div>
+<input type="file" id="import-file-input" accept=".json" style="display:none" onchange="importJSON(this)">
+</div>
+
 <div class="settings-card">
 <div class="sc-title">📂 Категории</div>
 <div style="margin-bottom:10px">
@@ -373,7 +419,8 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 </div>
 
 <!-- MODALS -->
-<div class="moverlay" id="m-acc" onclick="closeMod('m-acc')"><div class="modal" onclick="event.stopPropagation()">
+<div class="moverlay" id="m-acc" onclick="closeMod('acc')"><div class="modal" onclick="event.stopPropagation()">
+<div class="modal-close-btn" onclick="closeMod('acc')">✕</div>
 <div class="m-handle"></div><div class="m-title" id="modal-acc-title">➕ Новый счёт</div>
 <label class="m-lbl">Название</label><input class="m-inp" id="acc-name" placeholder="Visa / Наличные...">
 <label class="m-lbl">Иконка</label><input class="m-inp" id="acc-icon" placeholder="💳">
@@ -385,18 +432,22 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 <select class="m-inp m-sel" id="acc-cur"><option value="L">L — Лей</option><option value="$">$ — Доллар</option><option value="€">€ — Евро</option></select>
 <div id="acc-credit-fields" style="display:none"><label class="m-lbl">💰 Кредитный лимит</label><input class="m-inp" id="acc-credit-limit" type="number" placeholder="10000"></div>
 <label class="m-lbl">Баланс</label><input class="m-inp" id="acc-bal" type="number" placeholder="0" step="0.01">
-<button class="m-btn primary" onclick="saveAcc()">💾 Сохранить</button>
+<button class="m-btn primary" id="acc-save-btn" onclick="saveAcc()">💾 Сохранить</button>
+<button class="m-btn cancel" onclick="closeMod('acc')">✕ Отмена</button>
 </div></div>
 
-<div class="moverlay" id="m-balance" onclick="closeMod('m-balance')"><div class="modal" onclick="event.stopPropagation()">
+<div class="moverlay" id="m-balance" onclick="closeMod('balance')"><div class="modal" onclick="event.stopPropagation()">
+<div class="modal-close-btn" onclick="closeMod('balance')">✕</div>
 <div class="m-handle"></div><div class="m-title">💰 Корректировка баланса</div>
 <div id="balance-acc-info" style="margin-bottom:12px;font-size:14px"></div>
 <label class="m-lbl">Новый баланс</label><input class="m-inp" id="balance-new" type="number" placeholder="0" step="0.01">
 <label class="m-lbl">Причина (необязательно)</label><input class="m-inp" id="balance-reason" placeholder="Корректировка...">
-<button class="m-btn primary" onclick="saveBalanceAdjustment()">💾 Сохранить</button>
+<button class="m-btn primary" id="balance-save-btn" onclick="saveBalanceAdjustment()">💾 Сохранить</button>
+<button class="m-btn cancel" onclick="closeMod('balance')">✕ Отмена</button>
 </div></div>
 
-<div class="moverlay" id="m-add-tx" onclick="closeMod('m-add-tx')"><div class="modal" onclick="event.stopPropagation()">
+<div class="moverlay" id="m-add-tx" onclick="closeMod('add-tx')"><div class="modal" onclick="event.stopPropagation()">
+<div class="modal-close-btn" onclick="cancelTxModal()">✕</div>
 <div class="m-handle"></div><div class="m-title" id="tx-modal-title">📝 Операция</div>
 <label class="m-lbl">Счёт</label><select id="tx-acc" class="m-inp m-sel"></select>
 <label class="m-lbl">Категория</label><div id="tx-cat-picker" class="cat-picker-grid"></div>
@@ -404,37 +455,46 @@ body{font-family:system-ui,sans-serif;color:var(--text);max-width:430px;margin:0
 <input type="hidden" id="tx-cat" value="other"><input type="hidden" id="tx-subcat" value="">
 <label class="m-lbl">Сумма</label><input class="m-inp" id="tx-amt" type="number" placeholder="0" step="0.01">
 <label class="m-lbl">Описание</label><input class="m-inp" id="tx-desc" placeholder="Заметка...">
-<button class="m-btn primary" onclick="doAddTx()">✓ Сохранить</button>
+<button class="m-btn primary" id="tx-save-btn" onclick="doAddTx()">✓ Сохранить</button>
+<button class="m-btn cancel" onclick="cancelTxModal()">✕ Отмена</button>
 </div></div>
 
-<div class="moverlay" id="m-transfer" onclick="closeMod('m-transfer')"><div class="modal" onclick="event.stopPropagation()">
+<div class="moverlay" id="m-transfer" onclick="closeMod('transfer')"><div class="modal" onclick="event.stopPropagation()">
+<div class="modal-close-btn" onclick="closeMod('transfer')">✕</div>
 <div class="m-handle"></div><div class="m-title">↔️ Перевод</div>
 <label class="m-lbl">Откуда</label><select id="tr-from" class="m-inp m-sel"></select>
 <label class="m-lbl">Куда</label><select id="tr-to" class="m-inp m-sel"></select>
 <label class="m-lbl">Сумма</label><input class="m-inp" id="tr-amt" type="number" placeholder="0" step="0.01">
-<button class="m-btn primary" onclick="doTransfer()">✓ Перевести</button>
+<button class="m-btn primary" id="transfer-save-btn" onclick="doTransfer()">✓ Перевести</button>
+<button class="m-btn cancel" onclick="closeMod('transfer')">✕ Отмена</button>
 </div></div>
 
-<div class="moverlay" id="m-goal" onclick="closeMod('m-goal')"><div class="modal" onclick="event.stopPropagation()">
+<div class="moverlay" id="m-goal" onclick="closeMod('goal')"><div class="modal" onclick="event.stopPropagation()">
+<div class="modal-close-btn" onclick="closeMod('goal')">✕</div>
 <div class="m-handle"></div><div class="m-title">🎯 Цель</div>
 <label class="m-lbl">Иконка</label><input class="m-inp" id="goal-icon" placeholder="🎯">
 <label class="m-lbl">Название</label><input class="m-inp" id="goal-name" placeholder="Накопить на...">
 <div class="m-row"><div style="flex:1"><label class="m-lbl">Цель</label><input class="m-inp" id="goal-target" type="number" placeholder="10000"></div><div style="flex:1"><label class="m-lbl">Накоплено</label><input class="m-inp" id="goal-saved" type="number" placeholder="0"></div></div>
-<button class="m-btn primary" onclick="saveGoal()">🎯 Сохранить</button>
+<button class="m-btn primary" id="goal-save-btn" onclick="saveGoal()">🎯 Сохранить</button>
+<button class="m-btn cancel" onclick="closeMod('goal')">✕ Отмена</button>
 </div></div>
 
-<div class="moverlay" id="m-debt" onclick="closeMod('m-debt')"><div class="modal" onclick="event.stopPropagation()">
-<div class="m-handle"></div><div class="m-title">💳 Долг / Кредит</div>
+<div class="moverlay" id="m-debt" onclick="closeMod('debt')"><div class="modal" onclick="event.stopPropagation()">
+<div class="modal-close-btn" onclick="closeMod('debt')">✕</div>
+<div class="m-handle"></div><div class="m-title" id="debt-modal-title">💳 Долг / Кредит</div>
 <label class="m-lbl">Кому / от кого</label><input class="m-inp" id="debt-name" placeholder="Имя или банк...">
 <label class="m-lbl">Тип</label><select class="m-inp m-sel" id="debt-type"><option value="owe">👤 Я должен</option><option value="owed">🤝 Мне должны</option><option value="credit">🏦 Кредит банка</option></select>
-<div class="m-row"><div style="flex:1.3"><label class="m-lbl">Сумма</label><input class="m-inp" id="debt-amt" type="number" placeholder="0"></div><div style="flex:1"><label class="m-lbl">Оплачено</label><input class="m-inp" id="debt-paid" type="number" placeholder="0"></div></div>
-<button class="m-btn primary" onclick="saveDebt()">💾 Сохранить</button>
+<div class="m-row"><div style="flex:1.3"><label class="m-lbl">Сумма</label><input class="m-inp" id="debt-amt" type="number" placeholder="0"></div><div style="flex:1"><label class="m-lbl">Оплачено</label><input class="m-inp" id="debt-paid-inp" type="number" placeholder="0"></div></div>
+<button class="m-btn primary" id="debt-save-btn" onclick="saveDebt()">💾 Сохранить</button>
+<button class="m-btn cancel" onclick="closeMod('debt')">✕ Отмена</button>
 </div></div>
 
-<div class="moverlay" id="m-budget" onclick="closeMod('m-budget')"><div class="modal" onclick="event.stopPropagation()">
+<div class="moverlay" id="m-budget" onclick="closeMod('budget')"><div class="modal" onclick="event.stopPropagation()">
+<div class="modal-close-btn" onclick="closeMod('budget')">✕</div>
 <div class="m-handle"></div><div class="m-title">💰 Бюджет на месяц</div>
 <label class="m-lbl">Сумма, L</label><input class="m-inp" id="budget-inp" type="number" placeholder="10000">
-<button class="m-btn primary" onclick="saveBudget()">💾 Сохранить</button>
+<button class="m-btn primary" id="budget-save-btn" onclick="saveBudget()">💾 Сохранить</button>
+<button class="m-btn cancel" onclick="closeMod('budget')">✕ Отмена</button>
 </div></div>
 
 <div class="confirm-overlay" id="confirm-reset"><div class="confirm-box">
@@ -470,13 +530,14 @@ let S={
   ],
   txs:[],cats:JSON.parse(JSON.stringify(DEFAULT_CATS)),
   goals:[],debts:[],budgets:{},
-  activeAcc:'main',_txType:'e',debtTab:'owe',
+  activeAcc:'main',_txType:'e',_editTxId:null,debtTab:'owe',
   statsMonth:new Date().getMonth(),statsYear:new Date().getFullYear(),
-  _contextAccId:null
+  _contextAccId:null,
+  _isSaving:false  // Флаг для предотвращения повторных сохранений
 };
 
-function save(){try{localStorage.setItem('financeProV4',JSON.stringify(S))}catch(e){}}
-function load(){try{const d=localStorage.getItem('financeProV4');if(d){const p=JSON.parse(d);S={...S,...p};if(!S.cats||!S.cats.length)S.cats=JSON.parse(JSON.stringify(DEFAULT_CATS));if(!S.goals)S.goals=[];if(!S.debts)S.debts=[];if(!S.budgets)S.budgets={};if(!S.accounts||!S.accounts.length)S.accounts=[{id:'main',name:'Основной',icon:'💳',balance:0,currency:'L',type:'card',active:true}]}}catch(e){}}
+function save(){try{localStorage.setItem('financeProV5',JSON.stringify(S))}catch(e){}}
+function load(){try{const d=localStorage.getItem('financeProV5')||localStorage.getItem('financeProV4');if(d){const p=JSON.parse(d);S={...S,...p};if(!S.cats||!S.cats.length)S.cats=JSON.parse(JSON.stringify(DEFAULT_CATS));if(!S.goals)S.goals=[];if(!S.debts)S.debts=[];if(!S.budgets)S.budgets={};if(!S.accounts||!S.accounts.length)S.accounts=[{id:'main',name:'Основной',icon:'💳',balance:0,currency:'L',type:'card',active:true}];S._editTxId=null}}catch(e){}}
 
 function parseAmount(v){const n=parseFloat(String(v).replace(',','.'));return isNaN(n)?0:Math.round(n*100)/100}
 function convertAmount(a,f,t){if(f===t)return a;return Math.round((a*(S.rates[f]||1)/(S.rates[t]||1))*100)/100}
@@ -490,40 +551,32 @@ function monthKey(m,y){return(y||S.statsYear)+'-'+String((m??S.statsMonth)+1).pa
 function monthTxs(){const mk=monthKey();return S.txs.filter(tx=>tx.date.substring(0,7)===mk)}
 
 // ═══════════════ RENDER ═══════════════
-function renderAll(){renderAccounts();renderHero();renderTxList();renderGoals()}
+function renderAll(){renderAccounts();renderHero();renderCapital();renderTxList();renderGoals()}
 function renderDebts(){renderDebtList()}
 function renderStats(){renderStatsFull()}
 
 function renderAccounts(){
   const c=document.getElementById('accounts-list');if(!c)return;
   let h='';
-  // Показываем ВСЕ счета (и активные, и неактивные)
   S.accounts.forEach(a=>{
     const isActive=a.active!==false;
     const isC=a.type==='credit';
     const cls=(a.id===S.activeAcc?' active':'')+(isC?' credit-card':'')+(!isActive?' inactive':'');
     const used=isC?usedCredit(a):0;const lim=a.creditLimit||0;const pct=lim>0?Math.round((used/lim)*100):0;
     const bc=pct>80?'var(--red)':pct>50?'var(--gold)':'var(--accent2)';
-    
-    h+=`<div class="acc-card${cls}" onclick="${isActive?`S.activeAcc='${a.id}';renderAll();save()`:''}" style="${!isActive?'cursor:default;opacity:0.5;border-style:dashed':''}">
+    h+=`<div class="acc-card${cls}" onclick="${isActive?`S.activeAcc='${a.id}';renderAll();save()`:''}" style="${!isActive?'cursor:default':''}">
       <span class="acc-icon">${a.icon}</span>
       <div class="acc-name">${a.name}${isC?' ⚡':''} ${!isActive?'💤':''}</div>
       <div class="acc-bal ${a.balance>=0?'pos':'neg'}">${formatAmount(a.balance,a.currency)}</div>
       <div class="acc-edit-btn" onclick="event.stopPropagation();openAccContextMenu('${a.id}',event)">⋮</div>`;
-    
     if(isC&&lim>0){
       h+=`<div class="acc-credit-used">${formatAmount(used,a.currency)} / ${formatAmount(lim,a.currency)}</div>
       <div class="acc-credit-bar"><div class="acc-credit-fill" style="width:${pct}%;background:${bc}"></div></div>
       <div class="acc-credit-pct">${pct}%</div>`;
     }
-    
-    if(!isActive){
-      h+=`<div style="margin-top:6px;font-size:9px;color:var(--muted);text-align:center">Неактивен</div>`;
-    }
-    
+    if(!isActive){h+=`<div style="margin-top:6px;font-size:9px;color:var(--muted);text-align:center">Неактивен</div>`}
     h+=`</div>`;
   });
-  
   h+=`<div class="acc-add" onclick="openAccModal()"><span style="font-size:20px">+</span><span>Новый</span></div>`;
   c.innerHTML=h;
 }
@@ -543,6 +596,37 @@ function renderSettingsAccList(){
   c.innerHTML=h||'<div style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Нет счетов</div>';
 }
 
+// ═══════════════ CAPITAL ═══════════════
+function renderCapital(){
+  let assets=0,liabilities=0;
+  S.accounts.forEach(a=>{
+    if(a.active===false)return;
+    const bal=convertAmount(a.balance,a.currency,S.currency);
+    if(a.type==='credit'){
+      if(a.creditLimit){
+        const used=Math.max(0,a.creditLimit-a.balance);
+        liabilities+=convertAmount(used,a.currency,S.currency);
+      }
+    } else {
+      if(bal>0)assets+=bal;
+      else liabilities+=Math.abs(bal);
+    }
+  });
+  S.debts.filter(d=>d.type==='owe'||d.type==='credit').forEach(d=>{
+    liabilities+=Math.max(0,(d.amount||0)-(d.paid||0));
+  });
+  S.debts.filter(d=>d.type==='owed').forEach(d=>{
+    assets+=Math.max(0,(d.amount||0)-(d.paid||0));
+  });
+  assets=Math.round(assets*100)/100;
+  liabilities=Math.round(liabilities*100)/100;
+  const net=Math.round((assets-liabilities)*100)/100;
+  const ea=document.getElementById('cap-assets');const el=document.getElementById('cap-liab');const en=document.getElementById('cap-net');
+  if(ea)ea.textContent=formatAmount(assets,S.currency);
+  if(el)el.textContent=formatAmount(liabilities,S.currency);
+  if(en){en.textContent=formatAmount(net,S.currency);en.className='cap-val '+(net>=0?'blue':'red')}
+}
+
 // ═══════════════ ACCOUNT CONTEXT MENU ═══════════════
 function openAccContextMenu(accId,event){
   event.stopPropagation();
@@ -555,22 +639,14 @@ function openAccContextMenu(accId,event){
   setTimeout(()=>document.addEventListener('click',closeContextMenu,{once:true}),50);
 }
 function closeContextMenu(){document.getElementById('acc-context-menu').classList.remove('open')}
-
-function editAccount(){
-  closeContextMenu();
-  if(S._contextAccId)openAccModal(S._contextAccId);
-}
+function editAccount(){closeContextMenu();if(S._contextAccId)openAccModal(S._contextAccId)}
 function toggleAccountActive(){
   closeContextMenu();
   const a=getAccount(S._contextAccId);if(!a)return;
-  a.active = a.active===false ? true : false; // Переключаем
-  if(!a.active && S.activeAcc===a.id){
-    // Если деактивировали активный счёт — переключаемся на первый активный
-    const firstActive=getActive()[0];
-    S.activeAcc=firstActive?firstActive.id:S.accounts[0].id;
-  }
+  a.active=a.active===false?true:false;
+  if(!a.active&&S.activeAcc===a.id){const first=getActive()[0];S.activeAcc=first?first.id:S.accounts[0].id}
   save();renderAll();renderSettingsAccList();
-  toast(a.active!==false?'✅ Счёт активирован':'💤 Счёт деактивирован (скрыт из баланса)');
+  toast(a.active!==false?'✅ Счёт активирован':'💤 Счёт деактивирован');
 }
 function adjustBalance(){
   closeContextMenu();
@@ -582,34 +658,28 @@ function adjustBalance(){
   openMod('balance');
 }
 function saveBalanceAdjustment(){
-  const a=getAccount(document.getElementById('m-balance')._accId);if(!a)return;
+  if(S._isSaving)return;
+  S._isSaving=true;
+  const btn=document.getElementById('balance-save-btn');
+  btn.disabled=true;
+  
+  const a=getAccount(document.getElementById('m-balance')._accId);if(!a){S._isSaving=false;btn.disabled=false;return}
   const newBal=parseAmount(document.getElementById('balance-new').value);
   const reason=document.getElementById('balance-reason').value.trim();
   const diff=Math.round((newBal-a.balance)*100)/100;
-  if(diff===0)return closeMod('balance');
+  if(diff===0){closeMod('balance');S._isSaving=false;btn.disabled=false;return}
   a.balance=newBal;
-  if(diff!==0){
-    S.txs.push({
-      id:'tx_'+Date.now(),accountId:a.id,type:diff>0?'i':'e',
-      amount:diff,currency:a.currency,catId:'other',
-      desc:'⚙️ '+ (reason||'Корректировка баланса'),
-      date:new Date().toISOString().substring(0,10),createdAt:Date.now()
-    });
-  }
-  closeMod('balance');save();renderAll();renderSettingsAccList();
-  toast('Баланс обновлён');
+  S.txs.push({id:'tx_'+Date.now(),accountId:a.id,type:diff>0?'i':'e',amount:diff,currency:a.currency,catId:'other',desc:'⚙️ '+(reason||'Корректировка баланса'),date:new Date().toISOString().substring(0,10),createdAt:Date.now()});
+  closeMod('balance');save();renderAll();renderSettingsAccList();toast('Баланс обновлён');
+  
+  S._isSaving=false;
 }
 function resetAccountBalance(){
   closeContextMenu();
   if(!confirm('Обнулить баланс этого счёта?'))return;
   const a=getAccount(S._contextAccId);if(!a)return;
   if(a.balance!==0){
-    S.txs.push({
-      id:'tx_'+Date.now(),accountId:a.id,type:a.balance>0?'e':'i',
-      amount:-a.balance,currency:a.currency,catId:'other',
-      desc:'🔄 Обнуление баланса',
-      date:new Date().toISOString().substring(0,10),createdAt:Date.now()
-    });
+    S.txs.push({id:'tx_'+Date.now(),accountId:a.id,type:a.balance>0?'e':'i',amount:-a.balance,currency:a.currency,catId:'other',desc:'🔄 Обнуление баланса',date:new Date().toISOString().substring(0,10),createdAt:Date.now()});
   }
   a.balance=0;save();renderAll();renderSettingsAccList();toast('Баланс обнулён');
 }
@@ -623,30 +693,630 @@ function deleteAccount(){
   save();renderAll();renderSettingsAccList();toast('Счёт удалён');
 }
 
-// ═══════════════ HERO / TX / GOALS ═══════════════
+// ═══════════════ HERO ═══════════════
 function renderHero(){
   const t=totalBalance();const e=document.getElementById('hero-amt');
   if(e){e.textContent=formatAmount(t,S.currency);e.className='hero-amt '+(t>=0?'ok':t>-500?'warn':'bad')}
   const s=document.getElementById('hero-sub');if(s)s.textContent=getActive().length+' активных счёт(а)';
 }
+
+// ═══════════════ TRANSACTION LIST ═══════════════
 function renderTxList(){
   const c=document.getElementById('txlist');if(!c)return;
   const txs=[...S.txs].sort((a,b)=>b.createdAt-a.createdAt);
   if(!txs.length){c.innerHTML=`<div class="empty-state"><div class="empty-ico">📭</div><div class="empty-txt">Нет операций</div></div>`;return}
   const g={};txs.forEach(tx=>{const d=tx.date;if(!g[d])g[d]=[];g[d].push(tx)});
-  let h='';Object.keys(g).sort().reverse().forEach(d=>{h+=`<div class="tx-dg"><div class="tx-dl">${d.split('-').reverse().join('.')}</div>`;g[d].forEach(tx=>{const a=getAccount(tx.accountId);const an=a?a.icon+' '+a.name:'?';const cat=S.cats.find(c=>c.id===tx.catId);const cn=cat?cat.icon+' '+cat.name:'📦';const sn=tx.subcatId?(cat?.subs?.find(s=>s.id===tx.subcatId)?.name||''):'';h+=`<div class="tx-item"><div class="tx-ico" style="background:${tx.type==='e'?'rgba(248,113,113,.12)':'rgba(74,222,128,.12)'}">${tx.type==='e'?'📤':'📥'}</div><div class="tx-inf"><div class="tx-desc">${tx.desc||(tx.type==='e'?'Расход':'Доход')}</div><div class="tx-meta">${an}</div><span class="tx-cat">${cn}${sn?' › '+sn:''}</span></div><div class="tx-right"><div class="tx-amt ${tx.type}">${formatAmount(tx.amount,tx.currency||'L')}</div></div></div>`});h+=`</div>`});c.innerHTML=h;
+  let h='';
+  Object.keys(g).sort().reverse().forEach(d=>{
+    h+=`<div class="tx-dg"><div class="tx-dl">${d.split('-').reverse().join('.')}</div>`;
+    g[d].forEach(tx=>{
+      const a=getAccount(tx.accountId);const an=a?a.icon+' '+a.name:'?';
+      const cat=S.cats.find(c=>c.id===tx.catId);const cn=cat?cat.icon+' '+cat.name:'📦';
+      const sn=tx.subcatId?(cat?.subs?.find(s=>s.id===tx.subcatId)?.name||''):'';
+      h+=`<div class="tx-item">
+        <div class="tx-ico" style="background:${tx.type==='e'?'rgba(248,113,113,.12)':'rgba(74,222,128,.12)'}">${tx.type==='e'?'📤':'📥'}</div>
+        <div class="tx-inf">
+          <div class="tx-desc">${tx.desc||(tx.type==='e'?'Расход':'Доход')}</div>
+          <div class="tx-meta">${an}</div>
+          <span class="tx-cat">${cn}${sn?' › '+sn:''}</span>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amt ${tx.type}">${formatAmount(tx.amount,tx.currency||'L')}</div>
+        </div>
+        <div class="tx-actions">
+          <div class="tx-act-btn edit-btn" onclick="editTx('${tx.id}')" title="Редактировать">✏️</div>
+          <div class="tx-act-btn del-btn" onclick="deleteTx('${tx.id}')" title="Удалить">✕</div>
+        </div>
+      </div>`;
+    });
+    h+=`</div>`;
+  });
+  c.innerHTML=h;
 }
+
+// ═══════════════ TX DELETE / EDIT ═══════════════
+function deleteTx(id){
+  if(!confirm('Удалить эту операцию?'))return;
+  const tx=S.txs.find(t=>t.id===id);if(!tx)return;
+  const a=getAccount(tx.accountId);
+  if(a)a.balance=Math.round((a.balance-tx.amount)*100)/100;
+  S.txs=S.txs.filter(t=>t.id!==id);
+  save();renderAll();toast('Операция удалена');
+}
+
+function editTx(id){
+  const tx=S.txs.find(t=>t.id===id);if(!tx)return;
+  S._txType=tx.type;
+  S._editTxId=id;
+  document.getElementById('tx-modal-title').textContent=tx.type==='e'?'✏️ Редактировать расход':'✏️ Редактировать доход';
+  const s=document.getElementById('tx-acc');
+  if(s)s.innerHTML=getActive().map(a=>`<option value="${a.id}" ${a.id===tx.accountId?'selected':''}>${a.icon} ${a.name}</option>`).join('');
+  document.getElementById('tx-amt').value=Math.abs(tx.amount);
+  document.getElementById('tx-desc').value=tx.desc||'';
+  document.getElementById('tx-cat').value=tx.catId||'other';
+  document.getElementById('tx-subcat').value=tx.subcatId||'';
+  document.getElementById('tx-subcat-list').classList.remove('open');
+  renderCatPicker('tx-cat-picker',tx.catId||'other');
+  const cat=S.cats.find(c=>c.id===tx.catId);
+  if(cat&&cat.subs&&cat.subs.length){
+    let sh='';cat.subs.forEach(sub=>{sh+=`<div class="subcat-item${sub.id===tx.subcatId?' selected':''}" onclick="selectSub('${sub.id}')">↳ ${sub.name}</div>`});
+    document.getElementById('tx-subcat-list').innerHTML=sh;
+    document.getElementById('tx-subcat-list').classList.add('open');
+  }
+  // Сброс кнопки
+  document.getElementById('tx-save-btn').disabled=false;
+  S._isSaving=false;
+  openMod('add-tx');
+}
+
+function cancelTxModal(){S._editTxId=null;S._isSaving=false;document.getElementById('tx-save-btn').disabled=false;closeMod('add-tx')}
+
+// ═══════════════ GOALS ═══════════════
 function renderGoals(){
   const c=document.getElementById('goals-list');if(!c)return;
   if(!S.goals.length){c.innerHTML=`<div class="goal-add" onclick="openGoalModal()"><span style="font-size:20px">+</span><span>Цель</span></div>`;return}
-  let h='';S.goals.forEach(g=>{const pct=Math.min(100,Math.round((g.saved/g.target)*100));h+=`<div class="goal-card" onclick="editGoal('${g.id}')"><div class="goal-card-ico">${g.icon}</div><div class="goal-card-name">${g.name}</div><div class="goal-card-pct">${pct}%</div><div class="goal-card-bar"><div class="goal-card-fill" style="width:${pct}%;background:var(--accent2)"></div></div><div class="goal-card-sub">${formatAmount(g.saved,S.currency)} / ${formatAmount(g.target,S.currency)}</div></div>`});h+=`<div class="goal-add" onclick="openGoalModal()"><span style="font-size:20px">+</span><span>Цель</span></div>`;c.innerHTML=h;
+  let h='';
+  S.goals.forEach(g=>{
+    const pct=Math.min(100,Math.round((g.saved/g.target)*100));
+    const color=pct>=100?'var(--gold)':'var(--accent2)';
+    h+=`<div class="goal-card" onclick="editGoal('${g.id}')">
+      <div class="goal-del-btn" onclick="event.stopPropagation();deleteGoal('${g.id}')">✕</div>
+      <div class="goal-card-ico">${g.icon}</div>
+      <div class="goal-card-name">${g.name}</div>
+      <div class="goal-card-pct" style="color:${color}">${pct}%</div>
+      <div class="goal-card-bar"><div class="goal-card-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div class="goal-card-sub">${formatAmount(g.saved,S.currency)} / ${formatAmount(g.target,S.currency)}</div>
+    </div>`;
+  });
+  h+=`<div class="goal-add" onclick="openGoalModal()"><span style="font-size:20px">+</span><span>Цель</span></div>`;
+  c.innerHTML=h;
 }
+
+function deleteGoal(gid){
+  if(!confirm('Удалить цель?'))return;
+  S.goals=S.goals.filter(g=>g.id!==gid);
+  save();renderAll();toast('Цель удалена');
+}
+
+// ═══════════════ DEBTS ═══════════════
 function renderDebtList(){
   const c=document.getElementById('debt-list');if(!c)return;
-  const tab=S.debtTab||'owe';document.querySelectorAll('.dtab').forEach(d=>{d.classList.remove('on');if(d.classList.contains(tab))d.classList.add('on')});
+  const tab=S.debtTab||'owe';
+  document.querySelectorAll('.dtab').forEach(d=>{d.classList.remove('on');if(d.classList.contains(tab))d.classList.add('on')});
   const debts=S.debts.filter(d=>d.type===tab);
   if(!debts.length){c.innerHTML=`<div class="empty-state"><div class="empty-ico">📭</div><div class="empty-txt">Нет записей</div></div>`;return}
-  let h='';debts.forEach(d=>{const pct=Math.round((d.paid/d.amount)*100);h+=`<div class="debt-item"><div class="debt-top"><span class="debt-name">${d.name}</span><span class="debt-badge ${d.type}">${d.type==='owe'?'Должен':d.type==='owed'?'Мне':'Кредит'}</span></div><div class="debt-amounts"><span class="debt-total">${formatAmount(d.amount,'L')}</span><span class="debt-paid">Оплачено: ${formatAmount(d.paid,'L')}</span></div><div class="debt-prog-bar"><div class="debt-prog-fill" style="width:${pct}%;background:var(--accent2)"></div></div></div>`});c.innerHTML=h;
+  let h='';
+  debts.forEach(d=>{
+    const pct=d.amount>0?Math.min(100,Math.round((d.paid/d.amount)*100)):0;
+    const remaining=Math.max(0,d.amount-d.paid);
+    h+=`<div class="debt-item">
+      <div class="debt-top">
+        <span class="debt-name">${d.name}</span>
+        <span class="debt-badge ${d.type}">${d.type==='owe'?'Должен':d.type==='owed'?'Мне':'Кредит'}</span>
+      </div>
+      <div class="debt-amounts">
+        <span class="debt-total">${formatAmount(remaining,'L')}</span>
+        <span class="debt-paid">Оплачено: ${formatAmount(d.paid,'L')} / ${formatAmount(d.amount,'L')}</span>
+      </div>
+      <div class="debt-prog-bar"><div class="debt-prog-fill" style="width:${pct}%;background:var(--accent2)"></div></div>
+      <div class="debt-actions">
+        <button class="debt-act-btn edit" onclick="openDebtModal('${d.id}')">✏️ Изменить</button>
+        <button class="debt-act-btn pay" onclick="quickPayDebt('${d.id}')">💰 Платёж</button>
+        <button class="debt-act-btn del" onclick="deleteDebt('${d.id}')">✕</button>
+      </div>
+    </div>`;
+  });
+  c.innerHTML=h;
+}
+
+function deleteDebt(id){
+  if(!confirm('Удалить запись?'))return;
+  S.debts=S.debts.filter(d=>d.id!==id);
+  save();renderDebts();renderCapital();toast('Удалено');
+}
+
+function quickPayDebt(id){
+  const d=S.debts.find(x=>x.id===id);if(!d)return;
+  const remaining=d.amount-d.paid;
+  const amt=prompt(`Сумма платежа (осталось: ${formatAmount(remaining,'L')}):`,remaining);
+  if(!amt)return;
+  const v=parseAmount(amt);if(v<=0)return;
+  d.paid=Math.min(d.amount,Math.round((d.paid+v)*100)/100);
+  save();renderDebts();renderCapital();toast('Платёж записан');
+}
+
+// ═══════════════ MODALS / ACTIONS ═══════════════
+function openMod(id){
+  // Сбрасываем флаг сохранения при открытии модального окна
+  S._isSaving=false;
+  const modal=document.getElementById('m-'+id);
+  if(modal)modal.classList.add('open');
+}
+function closeMod(id){
+  const modal=document.getElementById('m-'+id);
+  if(modal)modal.classList.remove('open');
+}
+function showPg(pg){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+pg)?.classList.add('on');
+  document.querySelectorAll('.nb').forEach(n=>n.classList.remove('on'));
+  document.getElementById('n-'+pg)?.classList.add('on');
+  if(pg==='home')renderAll();
+  if(pg==='debts')renderDebts();
+  if(pg==='stats')renderStats();
+  if(pg==='settings'){renderCatManagement();renderSettingsAccList()}
+}
+
+function openAccModal(eid){
+  S._isSaving=false;
+  document.getElementById('acc-save-btn').disabled=false;
+  
+  if(eid){
+    const a=getAccount(eid);if(a){
+      document.getElementById('acc-name').value=a.name;
+      document.getElementById('acc-icon').value=a.icon;
+      document.getElementById('acc-type').value=a.type;
+      document.getElementById('acc-cur').value=a.currency;
+      document.getElementById('acc-bal').value=a.balance;
+      if(a.type==='credit'){document.getElementById('acc-credit-fields').style.display='block';document.getElementById('acc-credit-limit').value=a.creditLimit||0}
+      else{document.getElementById('acc-credit-fields').style.display='none'}
+    }
+    document.getElementById('modal-acc-title').textContent='✏️ Изменить счёт';
+    document.getElementById('m-acc')._editId=eid;
+  } else {
+    // Очистка формы для нового счета
+    document.getElementById('acc-name').value='';
+    document.getElementById('acc-icon').value='💳';
+    document.getElementById('acc-type').value='card';
+    document.getElementById('acc-cur').value='L';
+    document.getElementById('acc-bal').value='0';
+    document.getElementById('acc-credit-fields').style.display='none';
+    document.getElementById('acc-credit-limit').value='';
+    document.getElementById('modal-acc-title').textContent='➕ Новый счёт';
+    document.getElementById('m-acc')._editId=null;
+  }
+  openMod('acc');
+}
+function onAccTypeChange(){document.getElementById('acc-credit-fields').style.display=document.getElementById('acc-type').value==='credit'?'block':'none'}
+function saveAcc(){
+  // Защита от повторного сохранения
+  if(S._isSaving)return;
+  S._isSaving=true;
+  const btn=document.getElementById('acc-save-btn');
+  if(btn)btn.disabled=true;
+  
+  const nm=document.getElementById('acc-name').value.trim();
+  const ic=document.getElementById('acc-icon').value.trim()||'💳';
+  const tp=document.getElementById('acc-type').value;
+  const cu=document.getElementById('acc-cur').value;
+  const bl=parseAmount(document.getElementById('acc-bal').value);
+  const eid=document.getElementById('m-acc')._editId;
+  
+  if(!nm){
+    toast('Введите название');
+    S._isSaving=false;
+    if(btn)btn.disabled=false;
+    return;
+  }
+  
+  if(eid){
+    const a=getAccount(eid);
+    if(a){
+      a.name=nm;a.icon=ic;a.type=tp;a.currency=cu;a.balance=bl;
+      if(tp==='credit')a.creditLimit=parseAmount(document.getElementById('acc-credit-limit').value);
+      else a.creditLimit=undefined;
+    }
+  } else {
+    const a={
+      id:'acc_'+Date.now(),
+      name:nm,icon:ic,type:tp,currency:cu,balance:bl,active:true
+    };
+    if(tp==='credit')a.creditLimit=parseAmount(document.getElementById('acc-credit-limit').value);
+    S.accounts.push(a);
+    S.activeAcc=a.id;
+  }
+  
+  closeMod('acc');save();renderAll();renderSettingsAccList();toast(eid?'Счёт обновлён':'Счёт создан');
+  
+  // Очистка формы для следующего открытия
+  document.getElementById('acc-name').value='';
+  document.getElementById('acc-icon').value='💳';
+  document.getElementById('acc-type').value='card';
+  document.getElementById('acc-cur').value='L';
+  document.getElementById('acc-bal').value='0';
+  document.getElementById('acc-credit-fields').style.display='none';
+  document.getElementById('acc-credit-limit').value='';
+  document.getElementById('modal-acc-title').textContent='➕ Новый счёт';
+  document.getElementById('m-acc')._editId=null;
+  
+  S._isSaving=false;
+  if(btn)btn.disabled=false;
+}
+
+function openTxModal(tp){
+  S._txType=tp;S._editTxId=null;
+  S._isSaving=false;
+  document.getElementById('tx-save-btn').disabled=false;
+  document.getElementById('tx-modal-title').textContent=tp==='e'?'💸 Расход':'💰 Доход';
+  
+  // Очистка формы
+  const s=document.getElementById('tx-acc');
+  if(s)s.innerHTML=getActive().map(a=>`<option value="${a.id}" ${a.id===S.activeAcc?'selected':''}>${a.icon} ${a.name}</option>`).join('');
+  document.getElementById('tx-amt').value='';
+  document.getElementById('tx-desc').value='';
+  document.getElementById('tx-cat').value='other';
+  document.getElementById('tx-subcat').value='';
+  document.getElementById('tx-subcat-list').classList.remove('open');
+  document.getElementById('tx-subcat-list').innerHTML='';
+  renderCatPicker('tx-cat-picker','other');
+  openMod('add-tx');
+}
+
+function selectCat(cid){
+  document.getElementById('tx-cat').value=cid;document.getElementById('tx-subcat').value='';
+  renderCatPicker('tx-cat-picker',cid);
+  const cat=S.cats.find(c=>c.id===cid);const sc=document.getElementById('tx-subcat-list');
+  if(cat&&cat.subs&&cat.subs.length){let h='';cat.subs.forEach(s=>h+=`<div class="subcat-item" onclick="selectSub('${s.id}')">↳ ${s.name}</div>`);sc.innerHTML=h;sc.classList.add('open')}
+  else{sc.innerHTML='';sc.classList.remove('open')}
+}
+function selectSub(sid){
+  document.getElementById('tx-subcat').value=sid;
+  document.querySelectorAll('#tx-subcat-list .subcat-item').forEach(e=>e.classList.remove('selected'));
+  event.target.classList.add('selected');
+}
+
+function doAddTx(){
+  // Защита от повторного сохранения
+  if(S._isSaving)return;
+  S._isSaving=true;
+  const btn=document.getElementById('tx-save-btn');
+  if(btn)btn.disabled=true;
+  
+  const aid=document.getElementById('tx-acc').value;
+  const am=parseAmount(document.getElementById('tx-amt').value);
+  const ds=document.getElementById('tx-desc').value.trim();
+  const ci=document.getElementById('tx-cat').value;
+  const si=document.getElementById('tx-subcat').value;
+  const tp=S._txType;
+  const eid=S._editTxId;
+  
+  if(!aid){toast('Выберите счёт');S._isSaving=false;if(btn)btn.disabled=false;return}
+  if(am<=0){toast('Введите сумму');S._isSaving=false;if(btn)btn.disabled=false;return}
+  
+  const a=getAccount(aid);
+  if(!a){toast('Счёт не найден');S._isSaving=false;if(btn)btn.disabled=false;return}
+  
+  const ta=tp==='e'?-Math.abs(am):Math.abs(am);
+
+  if(eid){
+    const old=S.txs.find(t=>t.id===eid);
+    if(!old){S._isSaving=false;if(btn)btn.disabled=false;return}
+    const oldAcc=getAccount(old.accountId);
+    if(oldAcc)oldAcc.balance=Math.round((oldAcc.balance-old.amount)*100)/100;
+    if(tp==='e'&&a.balance+Math.abs(old.accountId===aid?old.amount:0)<Math.abs(ta)){
+      if(oldAcc&&old.accountId===aid)oldAcc.balance=Math.round((oldAcc.balance+old.amount)*100)/100;
+      toast('Недостаточно средств');
+      S._isSaving=false;
+      if(btn)btn.disabled=false;
+      return;
+    }
+    a.balance=Math.round((a.balance+ta)*100)/100;
+    old.accountId=aid;old.type=tp;old.amount=ta;old.currency=a.currency;
+    old.catId=ci;old.subcatId=si||null;old.desc=ds||(tp==='e'?'Расход':'Доход');
+    S._editTxId=null;
+  } else {
+    if(tp==='e'&&a.balance<Math.abs(ta)){
+      toast('Недостаточно средств');
+      S._isSaving=false;
+      if(btn)btn.disabled=false;
+      return;
+    }
+    S.txs.push({
+      id:'tx_'+Date.now(),
+      accountId:aid,type:tp,amount:ta,currency:a.currency,
+      catId:ci,subcatId:si||null,
+      desc:ds||(tp==='e'?'Расход':'Доход'),
+      date:new Date().toISOString().substring(0,10),
+      createdAt:Date.now()
+    });
+    a.balance=Math.round((a.balance+ta)*100)/100;
+  }
+  
+  closeMod('add-tx');
+  save();
+  renderAll();
+  toast(eid?'Операция обновлена':(tp==='e'?'💸 Расход записан':'💰 Доход записан'));
+  
+  // Очистка формы для следующего открытия
+  document.getElementById('tx-amt').value='';
+  document.getElementById('tx-desc').value='';
+  document.getElementById('tx-cat').value='other';
+  document.getElementById('tx-subcat').value='';
+  document.getElementById('tx-subcat-list').classList.remove('open');
+  document.getElementById('tx-subcat-list').innerHTML='';
+  S._editTxId=null;
+  
+  S._isSaving=false;
+  if(btn)btn.disabled=false;
+}
+
+function openTransferModal(){
+  S._isSaving=false;
+  document.getElementById('transfer-save-btn').disabled=false;
+  
+  const a=getActive();
+  document.getElementById('tr-from').innerHTML=a.map(x=>`<option value="${x.id}">${x.icon} ${x.name}</option>`).join('');
+  document.getElementById('tr-to').innerHTML=a.map(x=>`<option value="${x.id}">${x.icon} ${x.name}</option>`).join('');
+  document.getElementById('tr-amt').value='';
+  openMod('transfer');
+}
+
+function doTransfer(){
+  if(S._isSaving)return;
+  S._isSaving=true;
+  const btn=document.getElementById('transfer-save-btn');
+  if(btn)btn.disabled=true;
+  
+  const fi=document.getElementById('tr-from').value;
+  const ti=document.getElementById('tr-to').value;
+  const am=parseAmount(document.getElementById('tr-amt').value);
+  
+  if(!fi||!ti){toast('Выберите счета');S._isSaving=false;if(btn)btn.disabled=false;return}
+  if(fi===ti){toast('Выберите разные счета');S._isSaving=false;if(btn)btn.disabled=false;return}
+  if(am<=0){toast('Введите сумму');S._isSaving=false;if(btn)btn.disabled=false;return}
+  
+  const fa=getAccount(fi),ta=getAccount(ti);
+  if(!fa||!ta){S._isSaving=false;if(btn)btn.disabled=false;return}
+  if(fa.balance<am){toast('Недостаточно средств');S._isSaving=false;if(btn)btn.disabled=false;return}
+  
+  const ca=convertAmount(am,fa.currency,ta.currency);
+  const dt=new Date().toISOString().substring(0,10);
+  const ts=Date.now();
+  
+  S.txs.push({id:'tx_'+ts,accountId:fi,type:'e',amount:-am,currency:fa.currency,desc:`→ ${ta.name}`,catId:'other',date:dt,createdAt:ts});
+  S.txs.push({id:'tx_'+(ts+1),accountId:ti,type:'i',amount:ca,currency:ta.currency,desc:`← ${fa.name}`,catId:'other',date:dt,createdAt:ts+1});
+  fa.balance=Math.round((fa.balance-am)*100)/100;
+  ta.balance=Math.round((ta.balance+ca)*100)/100;
+  
+  closeMod('transfer');
+  save();
+  renderAll();
+  toast('↔️ Перевод выполнен');
+  
+  document.getElementById('tr-amt').value='';
+  S._isSaving=false;
+  if(btn)btn.disabled=false;
+}
+
+function openGoalModal(gid){
+  S._isSaving=false;
+  document.getElementById('goal-save-btn').disabled=false;
+  
+  if(gid){
+    const g=S.goals.find(x=>x.id===gid);if(g){
+      document.getElementById('goal-icon').value=g.icon;document.getElementById('goal-name').value=g.name;
+      document.getElementById('goal-target').value=g.target;document.getElementById('goal-saved').value=g.saved;
+      document.getElementById('m-goal')._editId=gid;
+    }
+  } else {
+    // Очистка формы
+    document.getElementById('goal-icon').value='🎯';
+    document.getElementById('goal-name').value='';
+    document.getElementById('goal-target').value='';
+    document.getElementById('goal-saved').value='0';
+    document.getElementById('m-goal')._editId=null;
+  }
+  openMod('goal');
+}
+function editGoal(gid){openGoalModal(gid)}
+function saveGoal(){
+  if(S._isSaving)return;
+  S._isSaving=true;
+  const btn=document.getElementById('goal-save-btn');
+  if(btn)btn.disabled=true;
+  
+  const ic=document.getElementById('goal-icon').value.trim()||'🎯';
+  const nm=document.getElementById('goal-name').value.trim();
+  const tg=parseAmount(document.getElementById('goal-target').value);
+  const sv=parseAmount(document.getElementById('goal-saved').value);
+  const eid=document.getElementById('m-goal')._editId;
+  
+  if(!nm){toast('Введите название');S._isSaving=false;if(btn)btn.disabled=false;return}
+  if(tg<=0){toast('Введите целевую сумму');S._isSaving=false;if(btn)btn.disabled=false;return}
+  
+  if(eid){
+    const g=S.goals.find(x=>x.id===eid);
+    if(g){g.icon=ic;g.name=nm;g.target=tg;g.saved=sv}
+  } else {
+    S.goals.push({id:'goal_'+Date.now(),icon:ic,name:nm,target:tg,saved:sv});
+  }
+  
+  closeMod('goal');
+  save();
+  renderAll();
+  toast('🎯 Цель сохранена');
+  
+  // Очистка формы
+  document.getElementById('goal-icon').value='🎯';
+  document.getElementById('goal-name').value='';
+  document.getElementById('goal-target').value='';
+  document.getElementById('goal-saved').value='0';
+  
+  S._isSaving=false;
+  if(btn)btn.disabled=false;
+}
+
+// ═══════════════ DEBTS MODAL ═══════════════
+function openDebtModal(eid){
+  S._isSaving=false;
+  document.getElementById('debt-save-btn').disabled=false;
+  
+  if(eid){
+    const d=S.debts.find(x=>x.id===eid);if(d){
+      document.getElementById('debt-name').value=d.name;
+      document.getElementById('debt-type').value=d.type;
+      document.getElementById('debt-amt').value=d.amount;
+      document.getElementById('debt-paid-inp').value=d.paid||0;
+      document.getElementById('debt-modal-title').textContent='✏️ Редактировать';
+      document.getElementById('m-debt')._editId=eid;
+    }
+  } else {
+    // Очистка формы
+    document.getElementById('debt-name').value='';
+    document.getElementById('debt-amt').value='';
+    document.getElementById('debt-paid-inp').value='0';
+    document.getElementById('debt-type').value='owe';
+    document.getElementById('debt-modal-title').textContent='💳 Долг / Кредит';
+    document.getElementById('m-debt')._editId=null;
+  }
+  openMod('debt');
+}
+function saveDebt(){
+  if(S._isSaving)return;
+  S._isSaving=true;
+  const btn=document.getElementById('debt-save-btn');
+  if(btn)btn.disabled=true;
+  
+  const nm=document.getElementById('debt-name').value.trim();
+  const am=parseAmount(document.getElementById('debt-amt').value);
+  const pd=parseAmount(document.getElementById('debt-paid-inp').value);
+  const tp=document.getElementById('debt-type').value;
+  const eid=document.getElementById('m-debt')._editId;
+  
+  if(!nm){toast('Введите имя');S._isSaving=false;if(btn)btn.disabled=false;return}
+  if(am<=0){toast('Введите сумму');S._isSaving=false;if(btn)btn.disabled=false;return}
+  
+  if(eid){
+    const d=S.debts.find(x=>x.id===eid);if(d){d.name=nm;d.amount=am;d.paid=pd;d.type=tp}
+  } else {
+    S.debts.push({id:'debt_'+Date.now(),name:nm,amount:am,paid:pd,type:tp});
+  }
+  
+  closeMod('debt');
+  save();
+  renderDebts();
+  renderCapital();
+  toast(eid?'Долг обновлён':'Долг добавлен');
+  
+  // Очистка формы
+  document.getElementById('debt-name').value='';
+  document.getElementById('debt-amt').value='';
+  document.getElementById('debt-paid-inp').value='0';
+  
+  S._isSaving=false;
+  if(btn)btn.disabled=false;
+}
+
+function openBudgetModal(){
+  S._isSaving=false;
+  document.getElementById('budget-save-btn').disabled=false;
+  document.getElementById('budget-inp').value=S.budgets[monthKey()]||'';
+  openMod('budget');
+}
+function saveBudget(){
+  if(S._isSaving)return;
+  S._isSaving=true;
+  const btn=document.getElementById('budget-save-btn');
+  if(btn)btn.disabled=true;
+  
+  const v=parseAmount(document.getElementById('budget-inp').value);
+  if(v<=0){toast('Введите сумму');S._isSaving=false;if(btn)btn.disabled=false;return}
+  
+  S.budgets[monthKey()]=v;
+  closeMod('budget');
+  save();
+  renderStats();
+  toast('Бюджет сохранён');
+  
+  S._isSaving=false;
+  if(btn)btn.disabled=false;
+}
+
+// ═══════════════ CATEGORIES ═══════════════
+function renderCatManagement(){
+  const c=document.getElementById('cat-manage-list');const ps=document.getElementById('new-cat-parent');if(!c)return;
+  let h='';
+  S.cats.forEach(cat=>{
+    h+=`<div class="cat-manage-item"><span class="cmi-icon">${cat.icon}</span><span class="cmi-name">${cat.name}</span><button class="cmi-edit" onclick="editCat('${cat.id}')">✏️</button><button class="cmi-add-sub" onclick="addSub('${cat.id}')">+</button><button class="cmi-del" onclick="deleteCat('${cat.id}')">✕</button></div>`;
+    if(cat.subs)cat.subs.forEach(s=>{h+=`<div class="cat-manage-item" style="margin-left:24px;border-left:2px solid var(--accent-dim)"><span class="cmi-icon">↳</span><span class="cmi-name" style="font-size:12px">${s.name}</span><button class="cmi-edit" onclick="editSub('${cat.id}','${s.id}')">✏️</button><button class="cmi-del" onclick="deleteSub('${cat.id}','${s.id}')">✕</button></div>`});
+  });
+  c.innerHTML=h;
+  if(ps)ps.innerHTML='<option value="">— Корневая —</option>'+S.cats.map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+}
+function renderCatPicker(cntId,selId){
+  const c=document.getElementById(cntId);if(!c)return;
+  let h='';S.cats.forEach(cat=>{h+=`<div class="cat-pill${cat.id===selId?' selected':''}" onclick="selectCat('${cat.id}')"><div class="cat-pill-ico">${cat.icon}</div><div class="cat-pill-name">${cat.name}</div></div>`});c.innerHTML=h;
+}
+function addCategory(){
+  const nm=document.getElementById('new-cat-name').value.trim();const ic=document.getElementById('new-cat-icon').value.trim()||'📦';const pid=document.getElementById('new-cat-parent').value;
+  if(!nm)return toast('Введите название');
+  if(pid){const p=S.cats.find(c=>c.id===pid);if(p){if(!p.subs)p.subs=[];p.subs.push({id:'sub_'+Date.now(),name:nm,icon:ic})}}
+  else{S.cats.push({id:'cat_'+Date.now(),icon:ic,name:nm,parent:null,subs:[]})}
+  document.getElementById('new-cat-name').value='';document.getElementById('new-cat-icon').value='';
+  save();renderCatManagement();toast('Добавлено');
+}
+function editCat(cid){const c=S.cats.find(x=>x.id===cid);if(!c)return;const nm=prompt('Название:',c.name);if(nm){c.name=nm;const ic=prompt('Иконка:',c.icon);if(ic)c.icon=ic;save();renderCatManagement();toast('Обновлено')}}
+function deleteCat(cid){if(!confirm('Удалить категорию?'))return;S.cats=S.cats.filter(c=>c.id!==cid);save();renderCatManagement();toast('Удалено')}
+function addSub(cid){const nm=prompt('Подкатегория:');if(!nm)return;const c=S.cats.find(x=>x.id===cid);if(c){if(!c.subs)c.subs=[];c.subs.push({id:'sub_'+Date.now(),name:nm,icon:'↳'});save();renderCatManagement();toast('Добавлено')}}
+function editSub(cid,sid){const c=S.cats.find(x=>x.id===cid);if(!c||!c.subs)return;const s=c.subs.find(x=>x.id===sid);if(!s)return;const nm=prompt('Название:',s.name);if(nm){s.name=nm;save();renderCatManagement();toast('Обновлено')}}
+function deleteSub(cid,sid){const c=S.cats.find(x=>x.id===cid);if(c&&c.subs){c.subs=c.subs.filter(s=>s.id!==sid);save();renderCatManagement();toast('Удалено')}}
+
+// ═══════════════ IMPORT / EXPORT ═══════════════
+function exportJSON(){
+  try{
+    const data=JSON.stringify(S,null,2);
+    const blob=new Blob([data],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;
+    const d=new Date();const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    a.download=`finance_pro_backup_${ds}.json`;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('📤 Экспорт выполнен');
+  }catch(e){toast('Ошибка экспорта')}
+}
+function importJSON(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(!data.accounts||!Array.isArray(data.txs))return toast('❌ Неверный формат файла');
+      S={...S,...data};S._editTxId=null;S._isSaving=false;
+      save();renderAll();renderCatManagement();renderSettingsAccList();
+      toast('📥 Импорт выполнен успешно');
+    }catch{toast('❌ Ошибка чтения файла')}
+    input.value='';
+  };
+  reader.readAsText(file);
+}
+
+// ═══════════════ RESET ═══════════════
+function confirmReset(){document.getElementById('confirm-reset').classList.add('open')}
+function closeConfirm(){document.getElementById('confirm-reset').classList.remove('open')}
+function doReset(){
+  S={currency:'L',rates:{...DEFAULT_RATES},accounts:[{id:'main',name:'Основной',icon:'💳',balance:0,currency:'L',type:'card',active:true}],txs:[],cats:JSON.parse(JSON.stringify(DEFAULT_CATS)),goals:[],debts:[],budgets:{},activeAcc:'main',_txType:'e',_editTxId:null,debtTab:'owe',statsMonth:new Date().getMonth(),statsYear:new Date().getFullYear(),_contextAccId:null,_isSaving:false};
+  save();renderAll();renderCatManagement();renderSettingsAccList();closeConfirm();toast('Данные сброшены');
 }
 
 // ═══════════════ STATS ═══════════════
@@ -668,7 +1338,8 @@ function renderStatsFull(){
 
   document.getElementById('stats-big-numbers').innerHTML=`<div class="stat-big"><div class="stat-big-lbl">💰 Расходы</div><div class="stat-big-val red">${formatAmount(-totalExp,'L')}</div><div class="stat-big-sub">Транзакций: ${expTxs.length}</div></div><div class="stat-big"><div class="stat-big-lbl">💵 Доходы</div><div class="stat-big-val green">${formatAmount(totalInc,'L')}</div><div class="stat-big-sub">Транзакций: ${incTxs.length}</div></div>`;
 
-  const expByCat={};expTxs.forEach(t=>{const cid=t.catId||'other';if(!expByCat[cid])expByCat[cid]=0;expByCat[cid]+=convertAmount(Math.abs(t.amount),t.currency||'L',S.currency)});
+  const expByCat={};
+  expTxs.forEach(t=>{const cid=t.catId||'other';if(!expByCat[cid])expByCat[cid]=0;expByCat[cid]+=convertAmount(Math.abs(t.amount),t.currency||'L',S.currency)});
   const expCatArr=Object.entries(expByCat).map(([cid,amt])=>({cat:S.cats.find(c=>c.id===cid)||{icon:'📦',name:'Другое'},amt:Math.round(amt*100)/100})).sort((a,b)=>b.amt-a.amt);
   const maxExp=Math.max(1,...expCatArr.map(x=>x.amt));
   let expCatHTML='<div class="stats-cat-section"><div class="scs-header">🔴 РАСХОДЫ ПО КАТЕГОРИЯМ</div>';
@@ -677,17 +1348,19 @@ function renderStatsFull(){
 
   const incByCat={};incTxs.forEach(t=>{const cid=t.catId||'other';if(!incByCat[cid])incByCat[cid]=0;incByCat[cid]+=convertAmount(t.amount,t.currency||'L',S.currency)});
   const incCatArr=Object.entries(incByCat).map(([cid,amt])=>({cat:S.cats.find(c=>c.id===cid)||{icon:'📦',name:'Другое'},amt:Math.round(amt*100)/100})).sort((a,b)=>b.amt-a.amt);
-  if(incCatArr.length){let incCatHTML='<div class="stats-cat-section"><div class="scs-header">🟢 ДОХОДЫ ПО КАТЕГОРИЯМ</div>';incCatArr.forEach(({cat,amt})=>{incCatHTML+=`<div class="scs-item"><span class="scs-dot" style="background:var(--accent2);opacity:.7"></span><span class="scs-name">${cat.icon} ${cat.name}</span><span class="scs-amt">${formatAmount(amt,'L')}</span></div>`});incCatHTML+=`</div>`;document.getElementById('stats-inc-by-cat').innerHTML=incCatHTML}else{document.getElementById('stats-inc-by-cat').innerHTML=''}
+  if(incCatArr.length){let incCatHTML='<div class="stats-cat-section"><div class="scs-header">🟢 ДОХОДЫ ПО КАТЕГОРИЯМ</div>';incCatArr.forEach(({cat,amt})=>{incCatHTML+=`<div class="scs-item"><span class="scs-dot" style="background:var(--accent2);opacity:.7"></span><span class="scs-name">${cat.icon} ${cat.name}</span><span class="scs-amt">${formatAmount(amt,'L')}</span></div>`});incCatHTML+=`</div>`;document.getElementById('stats-inc-by-cat').innerHTML=incCatHTML}
+  else{document.getElementById('stats-inc-by-cat').innerHTML=''}
 
   renderMonthHeatmap(txs);renderDailyBars(txs);
 
   const topExp=[...expTxs].sort((a,b)=>Math.abs(b.amount)-Math.abs(a.amount)).slice(0,3);
   let topHTML='<div class="stats-cat-section"><div class="scs-header">🏆 ТОП РАСХОДОВ</div>';
   topExp.forEach((tx,i)=>{const medals=['🥇','🥈','🥉'];topHTML+=`<div class="top-tx-item"><span class="top-tx-rank ${['gold','silver','bronze'][i]}">${medals[i]}</span><span style="flex:1;font-size:13px">${tx.desc||'Без описания'}</span><span style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:var(--red)">${formatAmount(tx.amount,tx.currency||'L')}</span></div>`});
+  if(!topExp.length)topHTML+=`<div style="padding:16px;text-align:center;color:var(--muted);font-size:12px">Нет расходов</div>`;
   topHTML+=`</div>`;document.getElementById('top-tx-list').innerHTML=topHTML;
 
   const saved=totalInc-totalExp;const savingsRate=totalInc>0?Math.round((saved/totalInc)*100):0;
-  document.getElementById('savings-card').innerHTML=`<div class="savings-header"><span style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)">💎 НОРМА СБЕРЕЖЕНИЙ</span><span class="savings-rate">${savingsRate}%</span></div><div class="savings-bar"><div class="savings-fill" style="width:${Math.min(100,savingsRate)}%"></div></div><div class="savings-labels"><span>0%</span><span>50%</span><span>100%</span></div><div class="savings-info"><div class="savings-info-item"><div class="savings-info-val">${formatAmount(saved,'L')}</div><div class="savings-info-lbl">Сохранено</div></div></div>`;
+  document.getElementById('savings-card').innerHTML=`<div class="savings-header"><span style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)">💎 НОРМА СБЕРЕЖЕНИЙ</span><span class="savings-rate">${savingsRate}%</span></div><div class="savings-bar"><div class="savings-fill" style="width:${Math.min(100,Math.max(0,savingsRate))}%"></div></div><div class="savings-labels"><span>0%</span><span>50%</span><span>100%</span></div><div class="savings-info"><div class="savings-info-item"><div class="savings-info-val">${formatAmount(saved,'L')}</div><div class="savings-info-lbl">Сохранено</div></div></div>`;
 
   const daysInMonth=new Date(S.statsYear,S.statsMonth+1,0).getDate();
   const avgDaily=totalExp/daysInMonth;const avgCheck=expTxs.length>0?totalExp/expTxs.length:0;
@@ -720,118 +1393,10 @@ function renderDailyBars(txs){
   h+=`</div>`;c.innerHTML=h;
 }
 
-// ═══════════════ CAT MANAGEMENT ═══════════════
-function renderCatManagement(){
-  const c=document.getElementById('cat-manage-list');const ps=document.getElementById('new-cat-parent');if(!c)return;
-  let h='';S.cats.forEach(cat=>{h+=`<div class="cat-manage-item"><span class="cmi-icon">${cat.icon}</span><span class="cmi-name">${cat.name}</span><button class="cmi-edit" onclick="editCat('${cat.id}')">✏️</button><button class="cmi-add-sub" onclick="addSub('${cat.id}')">+</button><button class="cmi-del" onclick="deleteCat('${cat.id}')">✕</button></div>`;if(cat.subs)cat.subs.forEach(s=>{h+=`<div class="cat-manage-item" style="margin-left:24px;border-left:2px solid var(--accent-dim)"><span class="cmi-icon">↳</span><span class="cmi-name" style="font-size:12px">${s.name}</span><button class="cmi-edit" onclick="editSub('${cat.id}','${s.id}')">✏️</button><button class="cmi-del" onclick="deleteSub('${cat.id}','${s.id}')">✕</button></div>`})});c.innerHTML=h;
-  if(ps)ps.innerHTML='<option value="">— Корневая —</option>'+S.cats.map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
-}
-function renderCatPicker(cntId,selId){
-  const c=document.getElementById(cntId);if(!c)return;
-  let h='';S.cats.forEach(cat=>{h+=`<div class="cat-pill${cat.id===selId?' selected':''}" onclick="selectCat('${cat.id}')"><div class="cat-pill-ico">${cat.icon}</div><div class="cat-pill-name">${cat.name}</div></div>`});c.innerHTML=h;
-}
-
-// ═══════════════ MODALS / ACTIONS ═══════════════
-function openMod(id){document.getElementById('m-'+id)?.classList.add('open')}
-function closeMod(id){document.getElementById('m-'+id)?.classList.remove('open')}
-function showPg(pg){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.getElementById('p-'+pg)?.classList.add('on');
-  document.querySelectorAll('.nb').forEach(n=>n.classList.remove('on'));
-  document.getElementById('n-'+pg)?.classList.add('on');
-  if(pg==='home')renderAll();if(pg==='debts')renderDebts();if(pg==='stats')renderStats();if(pg==='settings'){renderCatManagement();renderSettingsAccList()}
-}
-
-function openAccModal(eid){
-  if(eid){const a=getAccount(eid);if(a){document.getElementById('acc-name').value=a.name;document.getElementById('acc-icon').value=a.icon;document.getElementById('acc-type').value=a.type;document.getElementById('acc-cur').value=a.currency;document.getElementById('acc-bal').value=a.balance;if(a.type==='credit'){document.getElementById('acc-credit-fields').style.display='block';document.getElementById('acc-credit-limit').value=a.creditLimit||0}}document.getElementById('modal-acc-title').textContent='✏️ Изменить счёт';document.getElementById('m-acc')._editId=eid}
-  else{document.getElementById('acc-name').value='';document.getElementById('acc-icon').value='💳';document.getElementById('acc-type').value='card';document.getElementById('acc-cur').value='L';document.getElementById('acc-bal').value='0';document.getElementById('acc-credit-fields').style.display='none';document.getElementById('modal-acc-title').textContent='➕ Новый счёт';document.getElementById('m-acc')._editId=null}
-  openMod('acc');
-}
-function onAccTypeChange(){document.getElementById('acc-credit-fields').style.display=document.getElementById('acc-type').value==='credit'?'block':'none'}
-function saveAcc(){
-  const nm=document.getElementById('acc-name').value.trim();const ic=document.getElementById('acc-icon').value.trim()||'💳';const tp=document.getElementById('acc-type').value;const cu=document.getElementById('acc-cur').value;const bl=parseAmount(document.getElementById('acc-bal').value);const eid=document.getElementById('m-acc')._editId;
-  if(!nm)return toast('Введите название');
-  if(eid){const a=getAccount(eid);if(a){a.name=nm;a.icon=ic;a.type=tp;a.currency=cu;a.balance=bl;if(tp==='credit')a.creditLimit=parseAmount(document.getElementById('acc-credit-limit').value)}}
-  else{const a={id:'acc_'+Date.now(),name:nm,icon:ic,type:tp,currency:cu,balance:bl,active:true};if(tp==='credit')a.creditLimit=parseAmount(document.getElementById('acc-credit-limit').value);S.accounts.push(a);S.activeAcc=a.id}
-  closeMod('acc');save();renderAll();renderSettingsAccList();toast('Сохранено');
-}
-
-function openTxModal(tp){S._txType=tp;document.getElementById('tx-modal-title').textContent=tp==='e'?'💸 Расход':'💰 Доход';const s=document.getElementById('tx-acc');if(s)s.innerHTML=getActive().map(a=>`<option value="${a.id}" ${a.id===S.activeAcc?'selected':''}>${a.icon} ${a.name}</option>`).join('');document.getElementById('tx-amt').value='';document.getElementById('tx-desc').value='';document.getElementById('tx-cat').value='other';document.getElementById('tx-subcat').value='';document.getElementById('tx-subcat-list').classList.remove('open');renderCatPicker('tx-cat-picker','other');openMod('add-tx')}
-function selectCat(cid){document.getElementById('tx-cat').value=cid;document.getElementById('tx-subcat').value='';renderCatPicker('tx-cat-picker',cid);const cat=S.cats.find(c=>c.id===cid);const sc=document.getElementById('tx-subcat-list');if(cat&&cat.subs&&cat.subs.length){let h='';cat.subs.forEach(s=>h+=`<div class="subcat-item" onclick="selectSub('${s.id}')">↳ ${s.name}</div>`);sc.innerHTML=h;sc.classList.add('open')}else{sc.innerHTML='';sc.classList.remove('open')}}
-function selectSub(sid){document.getElementById('tx-subcat').value=sid;document.querySelectorAll('#tx-subcat-list .subcat-item').forEach(e=>e.classList.remove('selected'));event.target.classList.add('selected')}
-function doAddTx(){
-  const aid=document.getElementById('tx-acc').value;const am=parseAmount(document.getElementById('tx-amt').value);const ds=document.getElementById('tx-desc').value.trim();const ci=document.getElementById('tx-cat').value;const si=document.getElementById('tx-subcat').value;const tp=S._txType;
-  if(!aid)return toast('Выберите счёт');if(am<=0)return toast('Введите сумму');
-  const a=getAccount(aid);if(!a)return toast('Счёт не найден');
-  const ta=tp==='e'?-Math.abs(am):Math.abs(am);
-  if(tp==='e'&&a.balance<Math.abs(ta))return toast('Недостаточно средств');
-  S.txs.push({id:'tx_'+Date.now(),accountId:aid,type:tp,amount:ta,currency:a.currency,catId:ci,subcatId:si||null,desc:ds||(tp==='e'?'Расход':'Доход'),date:new Date().toISOString().substring(0,10),createdAt:Date.now()});
-  a.balance=Math.round((a.balance+ta)*100)/100;
-  closeMod('add-tx');save();renderAll();toast(tp==='e'?'Расход':'Доход');
-}
-
-function openTransferModal(){const a=getActive();document.getElementById('tr-from').innerHTML=a.map(x=>`<option value="${x.id}">${x.icon} ${x.name}</option>`).join('');document.getElementById('tr-to').innerHTML=a.map(x=>`<option value="${x.id}">${x.icon} ${x.name}</option>`).join('');document.getElementById('tr-amt').value='';openMod('transfer')}
-function doTransfer(){
-  const fi=document.getElementById('tr-from').value;const ti=document.getElementById('tr-to').value;const am=parseAmount(document.getElementById('tr-amt').value);
-  if(!fi||!ti)return toast('Выберите счета');if(fi===ti)return toast('Разные счета');if(am<=0)return toast('Введите сумму');
-  const fa=getAccount(fi),ta=getAccount(ti);if(!fa||!ta)return;
-  if(fa.balance<am)return toast('Недостаточно');
-  const ca=convertAmount(am,fa.currency,ta.currency);const dt=new Date().toISOString().substring(0,10);const ts=Date.now();
-  S.txs.push({id:'tx_'+ts,accountId:fi,type:'e',amount:-am,currency:fa.currency,desc:`→ ${ta.name}`,catId:'other',date:dt,createdAt:ts});
-  S.txs.push({id:'tx_'+(ts+1),accountId:ti,type:'i',amount:ca,currency:ta.currency,desc:`← ${fa.name}`,catId:'other',date:dt,createdAt:ts+1});
-  fa.balance=Math.round((fa.balance-am)*100)/100;ta.balance=Math.round((ta.balance+ca)*100)/100;
-  closeMod('transfer');save();renderAll();toast('Перевод');
-}
-
-function openGoalModal(gid){
-  if(gid){const g=S.goals.find(x=>x.id===gid);if(g){document.getElementById('goal-icon').value=g.icon;document.getElementById('goal-name').value=g.name;document.getElementById('goal-target').value=g.target;document.getElementById('goal-saved').value=g.saved;document.getElementById('m-goal')._editId=gid}}
-  else{document.getElementById('goal-icon').value='🎯';document.getElementById('goal-name').value='';document.getElementById('goal-target').value='';document.getElementById('goal-saved').value='0';document.getElementById('m-goal')._editId=null}
-  openMod('goal');
-}
-function editGoal(gid){openGoalModal(gid)}
-function saveGoal(){
-  const ic=document.getElementById('goal-icon').value.trim()||'🎯';const nm=document.getElementById('goal-name').value.trim();const tg=parseAmount(document.getElementById('goal-target').value);const sv=parseAmount(document.getElementById('goal-saved').value);const eid=document.getElementById('m-goal')._editId;
-  if(!nm)return toast('Название');if(tg<=0)return toast('Цель');
-  if(eid){const g=S.goals.find(x=>x.id===eid);if(g){g.icon=ic;g.name=nm;g.target=tg;g.saved=sv}}
-  else{S.goals.push({id:'goal_'+Date.now(),icon:ic,name:nm,target:tg,saved:sv})}
-  closeMod('goal');save();renderAll();toast('Цель сохранена');
-}
-
-function openDebtModal(){document.getElementById('debt-name').value='';document.getElementById('debt-amt').value='';document.getElementById('debt-paid').value='0';document.getElementById('debt-type').value='owe';openMod('debt')}
-function saveDebt(){
-  const nm=document.getElementById('debt-name').value.trim();const am=parseAmount(document.getElementById('debt-amt').value);const pd=parseAmount(document.getElementById('debt-paid').value);const tp=document.getElementById('debt-type').value;
-  if(!nm)return toast('Название');if(am<=0)return toast('Сумма');
-  S.debts.push({id:'debt_'+Date.now(),name:nm,amount:am,paid:pd,type:tp});
-  closeMod('debt');save();renderDebts();toast('Долг добавлен');
-}
-
-function openBudgetModal(){document.getElementById('budget-inp').value=S.budgets[monthKey()]||'';openMod('budget')}
-function saveBudget(){const v=parseAmount(document.getElementById('budget-inp').value);if(v<=0)return toast('Введите сумму');S.budgets[monthKey()]=v;closeMod('budget');save();renderStats();toast('Бюджет сохранён')}
-
-function addCategory(){
-  const nm=document.getElementById('new-cat-name').value.trim();const ic=document.getElementById('new-cat-icon').value.trim()||'📦';const pid=document.getElementById('new-cat-parent').value;
-  if(!nm)return toast('Название');
-  if(pid){const p=S.cats.find(c=>c.id===pid);if(p){if(!p.subs)p.subs=[];p.subs.push({id:'sub_'+Date.now(),name:nm,icon:ic})}}
-  else{S.cats.push({id:'cat_'+Date.now(),icon:ic,name:nm,parent:null,subs:[]})}
-  document.getElementById('new-cat-name').value='';document.getElementById('new-cat-icon').value='';save();renderCatManagement();toast('Добавлено');
-}
-function editCat(cid){const c=S.cats.find(x=>x.id===cid);if(!c)return;const nm=prompt('Название:',c.name);if(nm){c.name=nm;const ic=prompt('Иконка:',c.icon);if(ic)c.icon=ic;save();renderCatManagement();toast('Обновлено')}}
-function deleteCat(cid){if(!confirm('Удалить категорию?'))return;S.cats=S.cats.filter(c=>c.id!==cid);save();renderCatManagement();toast('Удалено')}
-function addSub(cid){const nm=prompt('Подкатегория:');if(!nm)return;const c=S.cats.find(x=>x.id===cid);if(c){if(!c.subs)c.subs=[];c.subs.push({id:'sub_'+Date.now(),name:nm,icon:'↳'});save();renderCatManagement();toast('Добавлено')}}
-function editSub(cid,sid){const c=S.cats.find(x=>x.id===cid);if(!c||!c.subs)return;const s=c.subs.find(x=>x.id===sid);if(!s)return;const nm=prompt('Название:',s.name);if(nm){s.name=nm;save();renderCatManagement();toast('Обновлено')}}
-function deleteSub(cid,sid){const c=S.cats.find(x=>x.id===cid);if(c&&c.subs){c.subs=c.subs.filter(s=>s.id!==sid);save();renderCatManagement();toast('Удалено')}}
-
-function confirmReset(){document.getElementById('confirm-reset').classList.add('open')}
-function closeConfirm(){document.getElementById('confirm-reset').classList.remove('open')}
-function doReset(){
-  S={currency:'L',rates:{...DEFAULT_RATES},accounts:[{id:'main',name:'Основной',icon:'💳',balance:0,currency:'L',type:'card',active:true}],txs:[],cats:JSON.parse(JSON.stringify(DEFAULT_CATS)),goals:[],debts:[],budgets:{},activeAcc:'main',_txType:'e',debtTab:'owe',statsMonth:new Date().getMonth(),statsYear:new Date().getFullYear(),_contextAccId:null};
-  save();renderAll();renderCatManagement();renderSettingsAccList();closeConfirm();toast('Данные сброшены');
-}
-
 function updateTime(){const n=new Date();document.getElementById('hdr-time').textContent=n.toLocaleDateString('ru',{day:'numeric',month:'long'})+', '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0')}
 
 document.addEventListener('DOMContentLoaded',()=>{load();renderAll();updateTime();setInterval(updateTime,1000)});
-console.log('✅ Finance Pro v4 — Управление счетами готово');
+console.log('✅ Finance Pro v5.1 — Баги исправлены');
 </script>
 </body>
 </html>
